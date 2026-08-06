@@ -111,3 +111,14 @@
    - انزلاق الستارة واللوحات: `curtainOverlayVariants` بتوقيت `0.42s`.
    - ظهور الأقسام والعناوين عند التمرير: `sectionFadeUpVariants` بمسافة `28px` وزمن `0.55s`.
    - تحويم الفأرة المجهري التفاعلي: `subtleMicroHover` بمقياس `scale: 1.03` واستجابة لطيفة غير مبالغ فيها.
+
+## 🏗️ معيار الهيكلية الثلاثية والسكيليتون الهندسي (3-Layer Architecture & Purple Geometric Skeleton System)
+1. **هيكلية الصفحات الثلاثية**:
+   - **الطبقة الأولى (Page Layer)**: `src/app/[feature]/page.tsx` (Server Component مُزامن يحتوي على حماية الأدوار ويغلف DataWrapper داخل `<Suspense fallback={<FeatureSkeleton />}>`). يُمنع إيجاد `loading.tsx`.
+   - **الطبقة الثانية (Data Wrapper Layer)**: `src/app/[feature]/[Feature]DataWrapper.tsx` (Server Component غير مُزامن يجلب البيانات من الـ Service ويمرر `initialData`).
+   - **الطبقة الثالثة (Client Component Layer)**: `src/components/features/[feature]/[Feature]Client.tsx` ("use client" يحمل التفاعلية والفلترة والـ useMemo). يُمنع وضع مكونات UI داخل `src/app`.
+2. **نظام السكيليتون الهندسي البنفسجي (Purple Geometric Skeleton)**:
+   - يوضع السكيليتون المخصص في `page.tsx` داخل الـ Suspense.
+   - النمط البصري: `bg-[#f0ebfe] border border-[#10b981]/10 animate-pulse`.
+   - التدوير الهندسي القطري: `rounded-tl-none rounded-br-none rounded-tr-[40px] rounded-bl-[40px]` للكروت، و `rounded-tl-none rounded-br-none rounded-tr-xl rounded-bl-xl` للأزرار والأسطر.
+
