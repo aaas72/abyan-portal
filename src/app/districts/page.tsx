@@ -1,0 +1,580 @@
+"use client";
+
+import React, { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import { Navbar, Footer, SmartContainer } from "@/components/layout";
+import { SubpageHero, CategoryTabSelector, TagList } from "@/components/ui";
+import PortalService from "@/services/portalService";
+import {
+  curtainOverlayVariants,
+  curtainOverlayTransition,
+  itemFadeInRight,
+  subtleMicroHover,
+} from "@/lib/animations";
+
+type DistrictSubTab = "history" | "nature" | "pioneers" | "sites" | "economy" | "culture" | "villages";
+
+export function DistrictsPageContent() {
+  const searchParams = useSearchParams();
+  const queryDistrictId = searchParams.get("id");
+
+  const [selectedDistrictId, setSelectedDistrictId] = useState<string>(
+    queryDistrictId || "zinjibar"
+  );
+  const [selectedRegionFilter, setSelectedRegionFilter] = useState<string>("all");
+  const [activeSubTab, setActiveSubTab] = useState<DistrictSubTab>("history");
+
+  useEffect(() => {
+    if (queryDistrictId) {
+      setSelectedDistrictId(queryDistrictId);
+    }
+  }, [queryDistrictId]);
+
+  // Reset subtab to 'history' when selected district changes
+  useEffect(() => {
+    setActiveSubTab("history");
+  }, [selectedDistrictId]);
+
+  // DATA FETCHED STRICTLY VIA PORTAL SERVICE FROM SRC/DATA/DISTRICTSDATA.TS
+  const allDistricts = PortalService.getAllDistricts();
+  const regions = PortalService.getDistrictRegions();
+
+  const filteredDistricts =
+    selectedRegionFilter === "all"
+      ? allDistricts
+      : allDistricts.filter((d) => d.region === selectedRegionFilter);
+
+  const activeDistrict =
+    allDistricts.find((d) => d.id === selectedDistrictId) || allDistricts[0];
+
+  const subTabs: { id: DistrictSubTab; label: string }[] = [
+    { id: "history", label: "التاريخ والنشأة" },
+    { id: "nature", label: "الجغرافيا والمناخ" },
+    { id: "pioneers", label: "الأعلام والشخصيات" },
+    { id: "sites", label: "المعالم والأثار" },
+    { id: "economy", label: "الاقتصاد والزراعة" },
+    { id: "culture", label: "الثقافة والعادات" },
+    { id: "villages", label: "القرى والبلدات" },
+  ];
+
+  return (
+    <div className="min-h-screen bg-white text-slate-900 font-cairo selection:bg-emerald-500 selection:text-white">
+      {/* Navbar Header */}
+      <Navbar activeSection="districts" />
+
+      {/* Main Content with Safe Distance Padding below 150px Navbar */}
+      <main className="pt-44 sm:pt-48 lg:pt-52 pb-16">
+        {/* REUSABLE SUBPAGE HERO HEADER */}
+        <SubpageHero
+          tag="التقسيم الإداري والجغرافي والتاريخي الشامل"
+          titlePrefix="دليل وموسوعة مديريات"
+          titleHighlight="أبين الـ 11"
+          description="مرجع شامل ومفصل للتاريخ العريق، التضاريس والجغرافيا، المعالم الأثرية، الأعلام والشخصيات، والاقتصاد والتراث بكل مديرية"
+        />
+
+        {/* REUSABLE CATEGORY TAB SELECTOR */}
+        <CategoryTabSelector
+          tabs={regions}
+          activeTab={selectedRegionFilter}
+          onSelectTab={setSelectedRegionFilter}
+        />
+
+        {/* MAIN DISTRICTS GUIDE GRID & PROFILE SHOWCASE */}
+        <SmartContainer>
+          {/* MOBILE VIEW: ACCORDION LIST (Visible on Mobile & Tablet Portrait < lg) */}
+          <div className="block lg:hidden space-y-4">
+            <span className="text-xs font-normal text-slate-900 font-abyan-title block text-right mb-3">
+              انقر على المديرية للاستعراض الموسوعي التفصيلي:
+            </span>
+
+            <div className="space-y-3">
+              {filteredDistricts.map((dist) => {
+                const isSelected = selectedDistrictId === dist.id;
+
+                return (
+                  <div
+                    key={dist.id}
+                    className="border-b border-slate-100 pb-4 text-right transition-colors"
+                  >
+                    {/* District Card Header */}
+                    <div
+                      onClick={() => setSelectedDistrictId(isSelected ? "" : dist.id)}
+                      className="cursor-pointer py-2 flex items-center justify-between"
+                    >
+                      <div className="space-y-0.5 text-right flex-1 pl-3">
+                        <h3
+                          className={`font-abyan-title text-base sm:text-lg font-normal leading-snug transition-colors duration-300 ${
+                            isSelected
+                              ? "text-sky-600 font-medium"
+                              : "text-slate-900 hover:text-sky-600"
+                          }`}
+                        >
+                          مديرية {dist.name}
+                        </h3>
+                        <p className="text-xs text-slate-500 font-abyan-title font-normal">
+                          {dist.title}
+                        </p>
+                      </div>
+
+                      {/* Expand / Collapse Indicator */}
+                      <span className="text-xs font-abyan-title text-sky-600 font-normal shrink-0">
+                        {isSelected ? "إغلاق" : "استعراض الموسوعة"}
+                      </span>
+                    </div>
+
+                    {/* Accordion Expandable Detailed Profile */}
+                    <AnimatePresence>
+                      {isSelected && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                          className="overflow-hidden pt-4 space-y-5 text-right"
+                        >
+                          {/* Sub-tab selection row on mobile */}
+                          <div className="pt-1 w-full overflow-hidden">
+                            <CategoryTabSelector
+                              tabs={subTabs}
+                              activeTab={activeSubTab}
+                              onSelectTab={(tabId) => setActiveSubTab(tabId as DistrictSubTab)}
+                              size="sm"
+                              noContainer
+                            />
+                          </div>
+
+                          {/* Content Panel based on activeSubTab */}
+                          <div className="space-y-4 pt-1">
+                            {activeSubTab === "history" && (
+                              <div className="space-y-3">
+                                <p className="text-xs sm:text-sm text-slate-700 font-abyan-body font-normal leading-relaxed">
+                                  {dist.description}
+                                </p>
+                                {dist.historyOverview && (
+                                  <div className="space-y-1 pt-1">
+                                    <span className="text-xs font-normal text-slate-900 font-abyan-title block">
+                                      النشأة والمسار التاريخي:
+                                    </span>
+                                    <p className="text-xs sm:text-sm text-slate-600 font-abyan-body font-normal leading-relaxed">
+                                      {dist.historyOverview}
+                                    </p>
+                                  </div>
+                                )}
+                                {dist.historyMilestones && dist.historyMilestones.length > 0 && (
+                                  <div className="pt-2">
+                                    <TagList
+                                      title="محطات وأحداث مفصلية بالمديرية:"
+                                      items={dist.historyMilestones}
+                                      variant="pure-text"
+                                      color="emerald"
+                                    />
+                                  </div>
+                                )}
+                              </div>
+                            )}
+
+                            {activeSubTab === "nature" && (
+                              <div className="space-y-3">
+                                <div className="space-y-1">
+                                  <span className="text-xs font-normal text-slate-900 font-abyan-title block">
+                                    التضاريس والموقع الجغرافي:
+                                  </span>
+                                  <p className="text-xs sm:text-sm text-slate-600 font-abyan-body font-normal leading-relaxed">
+                                    {dist.geography}
+                                  </p>
+                                </div>
+                                {dist.climateAndNature && (
+                                  <div className="space-y-1 pt-1">
+                                    <span className="text-xs font-normal text-slate-900 font-abyan-title block">
+                                      المناخ والطبيعة البيئية:
+                                    </span>
+                                    <p className="text-xs sm:text-sm text-slate-600 font-abyan-body font-normal leading-relaxed">
+                                      {dist.climateAndNature}
+                                    </p>
+                                  </div>
+                                )}
+                              </div>
+                            )}
+
+                            {activeSubTab === "pioneers" && (
+                              <div className="space-y-3">
+                                {dist.famousPioneers && dist.famousPioneers.length > 0 && (
+                                  <TagList
+                                    title="أبرز الأعلام والشخصيات بالمديرية:"
+                                    items={dist.famousPioneers}
+                                    variant="pure-text"
+                                    color="emerald"
+                                  />
+                                )}
+                                {dist.pioneersDetails && dist.pioneersDetails.length > 0 && (
+                                  <div className="pt-2">
+                                    <TagList
+                                      title="تفاصيل وأدوار الرواد التاريخية:"
+                                      items={dist.pioneersDetails}
+                                      variant="pure-text"
+                                      color="sky"
+                                    />
+                                  </div>
+                                )}
+                              </div>
+                            )}
+
+                            {activeSubTab === "sites" && (
+                              <div className="space-y-3">
+                                <TagList
+                                  title="أهم المعالم والحصون الأثرية:"
+                                  items={dist.landmarks}
+                                  variant="pure-text"
+                                  color="emerald"
+                                />
+                                {dist.historicalSites && dist.historicalSites.length > 0 && (
+                                  <div className="pt-2">
+                                    <TagList
+                                      title="الشواهد والقلاع التاريخية:"
+                                      items={dist.historicalSites}
+                                      variant="pure-text"
+                                      color="sky"
+                                    />
+                                  </div>
+                                )}
+                              </div>
+                            )}
+
+                            {activeSubTab === "economy" && (
+                              <div className="space-y-3">
+                                {dist.economyDetails && (
+                                  <p className="text-xs sm:text-sm text-slate-700 font-abyan-title font-normal leading-relaxed">
+                                    {dist.economyDetails}
+                                  </p>
+                                )}
+                                <TagList
+                                  title="أبرز المحاصيل والمنتجات الزواعية:"
+                                  items={dist.crops}
+                                  variant="pure-text"
+                                  color="sky"
+                                />
+                                {dist.naturalResources && dist.naturalResources.length > 0 && (
+                                  <div className="pt-2">
+                                    <TagList
+                                      title="الثروات والموارد الطبيعية:"
+                                      items={dist.naturalResources}
+                                      variant="pure-text"
+                                      color="emerald"
+                                    />
+                                  </div>
+                                )}
+                              </div>
+                            )}
+
+                            {activeSubTab === "culture" && (
+                              <div className="space-y-3">
+                                {dist.traditionsAndCulture && (
+                                  <p className="text-xs sm:text-sm text-sky-600 font-abyan-title font-normal leading-relaxed">
+                                    {dist.traditionsAndCulture}
+                                  </p>
+                                )}
+                                {dist.folkHeritage && dist.folkHeritage.length > 0 && (
+                                  <div className="pt-2">
+                                    <TagList
+                                      title="الفنون والموروث الشعبي بالمديرية:"
+                                      items={dist.folkHeritage}
+                                      variant="pure-text"
+                                      color="emerald"
+                                    />
+                                  </div>
+                                )}
+                              </div>
+                            )}
+
+                            {activeSubTab === "villages" && (
+                              <div className="pt-1">
+                                <TagList
+                                  title="أبرز القرى والبلدات والمناطق بالمديرية:"
+                                  items={dist.villages}
+                                  variant="pill"
+                                  color="gradient"
+                                />
+                              </div>
+                            )}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* DESKTOP VIEW: 2-COLUMN SIDE-BY-SIDE LAYOUT (Visible on Large Screens >= lg) */}
+          <div className="hidden lg:flex gap-8 items-start">
+            {/* Right Column: Districts Cards Selector List (Slim & Balanced 270px Width) */}
+            <div className="w-[270px] shrink-0 space-y-3">
+              <span className="text-xs font-normal text-slate-900 font-abyan-title block text-right mb-2">
+                اختر المديرية للاستعراض الموسوعي الشامل:
+              </span>
+
+              <div className="grid grid-cols-1 gap-1.5 border-r border-slate-100 pr-3 max-h-[680px] overflow-y-auto pl-1 custom-scrollbar">
+                {filteredDistricts.map((dist) => {
+                  const isSelected = selectedDistrictId === dist.id;
+
+                  return (
+                    <motion.div
+                      key={dist.id}
+                      onClick={() => setSelectedDistrictId(dist.id)}
+                      className="py-3 px-1 text-right cursor-pointer bg-transparent border-b border-slate-100 last:border-none shadow-none transition-colors duration-300"
+                    >
+                      <h3
+                        className={`font-abyan-title text-base font-normal leading-snug transition-colors duration-300 ${
+                          isSelected
+                            ? "text-sky-600 font-medium"
+                            : "text-slate-900 hover:text-sky-600"
+                        }`}
+                      >
+                        مديرية {dist.name}
+                      </h3>
+                      <p className="text-xs text-slate-500 font-abyan-title font-normal truncate pt-0.5">
+                        {dist.title}
+                      </p>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Left Column: Active District Detailed Profile (Flex-1 Spacious Showcase) */}
+            <div className="flex-1 min-w-0 relative">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeDistrict.id}
+                  initial={curtainOverlayVariants.initial}
+                  animate={curtainOverlayVariants.animate}
+                  exit={curtainOverlayVariants.exit}
+                  transition={curtainOverlayTransition}
+                  className="p-6 sm:p-8 text-right bg-white border-none shadow-none space-y-6"
+                >
+                  {/* Header Info */}
+                  <motion.div {...itemFadeInRight(0.05)} className="space-y-1">
+                    <span className="text-xs sm:text-sm font-normal text-[#10b981] font-abyan-title block">
+                      المركز الإداري: {activeDistrict.capital}
+                    </span>
+                    <span className="text-xs text-slate-500 font-abyan-title block">
+                      المساحة الجغرافية: {activeDistrict.areaKm2} كم² ({activeDistrict.areaPercentage} من مساحة المحافظة)
+                    </span>
+                  </motion.div>
+
+                  {/* Title & Subtitle */}
+                  <motion.div {...itemFadeInRight(0.1)} className="space-y-1">
+                    <h2 className="font-abyan-title text-2xl sm:text-3xl lg:text-4xl text-slate-900 leading-snug font-normal">
+                      مديرية {activeDistrict.name}
+                    </h2>
+                    <p className="text-xs sm:text-sm font-normal text-sky-600 font-abyan-title">
+                      {activeDistrict.title}
+                    </p>
+                  </motion.div>
+
+                  {/* Responsive Scrollable Sub-Tab Selector */}
+                  <motion.div
+                    {...itemFadeInRight(0.14)}
+                    className="pt-1 w-full overflow-hidden"
+                  >
+                    <CategoryTabSelector
+                      tabs={subTabs}
+                      activeTab={activeSubTab}
+                      onSelectTab={(tabId) => setActiveSubTab(tabId as DistrictSubTab)}
+                      size="sm"
+                      noContainer
+                    />
+                  </motion.div>
+
+                  {/* Dynamic Sub-Tab Content Section */}
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeSubTab}
+                      initial={curtainOverlayVariants.initial}
+                      animate={curtainOverlayVariants.animate}
+                      exit={curtainOverlayVariants.exit}
+                      transition={curtainOverlayTransition}
+                      className="space-y-5 pt-2"
+                    >
+                      {/* TAB 1: HISTORY & MILESTONES */}
+                      {activeSubTab === "history" && (
+                        <div className="space-y-4">
+                          <p className="text-xs sm:text-sm lg:text-base text-slate-700 font-abyan-body font-normal leading-relaxed">
+                            {activeDistrict.description}
+                          </p>
+                          {activeDistrict.historyOverview && (
+                            <div className="space-y-1.5 pt-1">
+                              <span className="text-xs font-normal text-slate-900 font-abyan-title block">
+                                النشأة والمسار التاريخي:
+                              </span>
+                              <p className="text-xs sm:text-sm text-slate-700 font-abyan-body font-normal leading-relaxed">
+                                {activeDistrict.historyOverview}
+                              </p>
+                            </div>
+                          )}
+                          {activeDistrict.historyMilestones && activeDistrict.historyMilestones.length > 0 && (
+                            <div className="pt-2">
+                              <TagList
+                                title="محطات وأحداث مفصلية في تاريخ المديرية:"
+                                items={activeDistrict.historyMilestones}
+                                variant="pure-text"
+                                color="emerald"
+                              />
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {/* TAB 2: GEOGRAPHY & NATURE */}
+                      {activeSubTab === "nature" && (
+                        <div className="space-y-4">
+                          <div className="space-y-1.5">
+                            <span className="text-xs font-normal text-slate-900 font-abyan-title block">
+                              التضاريس والموقع الجغرافي:
+                            </span>
+                            <p className="text-xs sm:text-sm text-slate-700 font-abyan-body font-normal leading-relaxed">
+                              {activeDistrict.geography}
+                            </p>
+                          </div>
+                          {activeDistrict.climateAndNature && (
+                            <div className="space-y-1.5 pt-1">
+                              <span className="text-xs font-normal text-slate-900 font-abyan-title block">
+                                المناخ والطبيعة البيئية:
+                              </span>
+                              <p className="text-xs sm:text-sm text-slate-700 font-abyan-body font-normal leading-relaxed">
+                                {activeDistrict.climateAndNature}
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {/* TAB 3: PIONEERS & FIGURES */}
+                      {activeSubTab === "pioneers" && (
+                        <div className="space-y-4">
+                          {activeDistrict.famousPioneers && activeDistrict.famousPioneers.length > 0 && (
+                            <TagList
+                              title="أبرز الأعلام والشخصيات بالمديرية:"
+                              items={activeDistrict.famousPioneers}
+                              variant="pure-text"
+                              color="emerald"
+                            />
+                          )}
+                          {activeDistrict.pioneersDetails && activeDistrict.pioneersDetails.length > 0 && (
+                            <div className="pt-2">
+                              <TagList
+                                title="تفاصيل ومساهمات الرواد الوطنية والتاريخية:"
+                                items={activeDistrict.pioneersDetails}
+                                variant="pure-text"
+                                color="sky"
+                              />
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {/* TAB 4: SITES & LANDMARKS */}
+                      {activeSubTab === "sites" && (
+                        <div className="space-y-4">
+                          <TagList
+                            title="أهم المعالم والحصون الأثرية:"
+                            items={activeDistrict.landmarks}
+                            variant="pure-text"
+                            color="emerald"
+                          />
+                          {activeDistrict.historicalSites && activeDistrict.historicalSites.length > 0 && (
+                            <div className="pt-2">
+                              <TagList
+                                title="الشواهد والقلاع الأثرية بالمديرية:"
+                                items={activeDistrict.historicalSites}
+                                variant="pure-text"
+                                color="sky"
+                              />
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {/* TAB 5: ECONOMY & CROPS */}
+                      {activeSubTab === "economy" && (
+                        <div className="space-y-4">
+                          {activeDistrict.economyDetails && (
+                            <p className="text-xs sm:text-sm text-slate-700 font-abyan-body font-normal leading-relaxed">
+                              {activeDistrict.economyDetails}
+                            </p>
+                          )}
+                          <TagList
+                            title="أبرز المحاصيل والثروات الزراعية والحيوانية:"
+                            items={activeDistrict.crops}
+                            variant="pure-text"
+                            color="sky"
+                          />
+                          {activeDistrict.naturalResources && activeDistrict.naturalResources.length > 0 && (
+                            <div className="pt-2">
+                              <TagList
+                                title="الموارد والثروات الطبيعية بالمديرية:"
+                                items={activeDistrict.naturalResources}
+                                variant="pure-text"
+                                color="emerald"
+                              />
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {/* TAB 6: CULTURE & TRADITIONS */}
+                      {activeSubTab === "culture" && (
+                        <div className="space-y-4">
+                          {activeDistrict.traditionsAndCulture && (
+                            <p className="text-xs sm:text-sm text-sky-600 font-abyan-body font-normal leading-relaxed">
+                              {activeDistrict.traditionsAndCulture}
+                            </p>
+                          )}
+                          {activeDistrict.folkHeritage && activeDistrict.folkHeritage.length > 0 && (
+                            <div className="pt-2">
+                              <TagList
+                                title="الفنون الشعبية وأصالة الموروث بالمديرية:"
+                                items={activeDistrict.folkHeritage}
+                                variant="pure-text"
+                                color="emerald"
+                              />
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {/* TAB 7: VILLAGES & TOWNS */}
+                      {activeSubTab === "villages" && (
+                        <div className="pt-1">
+                          <TagList
+                            title="أبرز القرى والبلدات والمناطق بالمديرية:"
+                            items={activeDistrict.villages}
+                            variant="pill"
+                            color="gradient"
+                          />
+                        </div>
+                      )}
+                    </motion.div>
+                  </AnimatePresence>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+        </SmartContainer>
+      </main>
+
+      {/* Footer */}
+      <Footer />
+    </div>
+  );
+}
+
+export default function DistrictsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-white" />}>
+      <DistrictsPageContent />
+    </Suspense>
+  );
+}
