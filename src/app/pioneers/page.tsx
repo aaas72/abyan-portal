@@ -101,7 +101,7 @@ export default function PioneersPage() {
                       description: fig.biography,
                       quote: fig.quote,
                       bgGradient: fig.bgGradient,
-                      linkText: "عرض السيرة الكاملة ←",
+                      linkText: "معاينة ←",
                     }}
                     onClick={() => handleOpenPioneerModal(fig)}
                   />

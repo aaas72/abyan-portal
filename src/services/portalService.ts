@@ -1,12 +1,14 @@
-import { landmarkCategoriesData } from "@/data/landmarksData";
-import { pioneersCategoriesData } from "@/data/pioneersData";
-import { cultureCategoriesData, folkAudioTracksData } from "@/data/cultureData";
-import { economyPillarsData } from "@/data/economyData";
-import { districtsData, districtRegionsData } from "@/data/districtsData";
-import { historyErasData, timelineErasData, TimelineEraItem } from "@/data/historyData";
-import { galleryArchiveData, galleryCategoriesData } from "@/data/galleryData";
-import { homeHighlightsData } from "@/data/highlightsData";
-import { aboutPillarsData, aboutValuesData, aboutScopesData, aboutStatsData } from "@/data/aboutData";
+import { landmarkCategoriesData } from "@/data/encyclopedia/landmarksData";
+import { pioneersCategoriesData } from "@/data/encyclopedia/pioneersData";
+import { historyErasData, timelineErasData, TimelineEraItem } from "@/data/encyclopedia/historyData";
+import { districtsData, districtRegionsData } from "@/data/encyclopedia/districtsData";
+
+import { cultureCategoriesData, folkAudioTracksData } from "@/data/heritage/cultureData";
+import { economyPillarsData } from "@/data/heritage/economyData";
+import { galleryArchiveData, galleryCategoriesData } from "@/data/heritage/galleryData";
+
+import { homeHighlightsData } from "@/data/portal/highlightsData";
+import { aboutPillarsData, aboutValuesData, aboutScopesData, aboutStatsData } from "@/data/portal/aboutData";
 
 import {
   LandmarkCategorySchema,

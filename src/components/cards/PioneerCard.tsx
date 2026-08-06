@@ -67,10 +67,9 @@ export default function PioneerCard({ figure, onClick }: PioneerCardProps) {
       )}
 
       {/* Footer Prompt */}
-      <div className="pt-2 flex justify-between items-center text-[11px] text-slate-400 font-abyan-title overflow-hidden border-none">
-        <span>بطاقة قيد العلم</span>
-        <span className="text-sky-600 group-hover:translate-x-[-3px] transition-transform font-normal">
-          عرض السيرة الكاملة ←
+      <div className="pt-2 flex justify-end items-center text-xs text-sky-600 font-abyan-title overflow-hidden border-none">
+        <span className="group-hover:translate-x-[-3px] transition-transform font-normal">
+          معاينة ←
         </span>
       </div>
     </motion.div>
