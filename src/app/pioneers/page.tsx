@@ -1,128 +1,66 @@
-"use client";
+import React, { Suspense } from "react";
+import PioneersDataWrapper from "./PioneersDataWrapper";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Navbar, Footer, SmartContainer } from "@/components/layout";
-import { SubpageHero, CategoryTabSelector, UnifiedMediaViewer, MediaItem } from "@/components/ui";
-import { UniversalCard } from "@/components/cards";
-import PortalService from "@/services/portalService";
-import { PioneerFigure } from "@/types/schemas";
-import {
-  curtainOverlayVariants,
-  curtainOverlayTransition,
-} from "@/lib/animations";
+function PioneersSkeleton() {
+  return (
+    <div className="min-h-screen bg-white text-slate-900 font-cairo">
+      {/* Top Navbar Placeholder Line */}
+      <div className="h-24 w-full bg-slate-50 border-b border-slate-100 flex items-center justify-between px-8">
+        <div className="h-8 w-24 bg-[#f0ebfe] border border-[#10b981]/10 animate-pulse rounded-tl-none rounded-br-none rounded-tr-xl rounded-bl-xl" />
+        <div className="flex gap-4">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div
+              key={i}
+              className="h-4 w-16 bg-[#f0ebfe] border border-[#10b981]/10 animate-pulse rounded-tl-none rounded-br-none rounded-tr-xl rounded-bl-xl"
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Hero Header Skeleton */}
+      <div className="pt-32 pb-12 text-center max-w-3xl mx-auto space-y-4 px-4">
+        <div className="h-6 w-36 bg-[#f0ebfe] border border-[#10b981]/10 animate-pulse mx-auto rounded-tl-none rounded-br-none rounded-tr-xl rounded-bl-xl" />
+        <div className="h-10 w-2/3 bg-[#f0ebfe] border border-[#10b981]/10 animate-pulse mx-auto rounded-tl-none rounded-br-none rounded-tr-xl rounded-bl-xl" />
+        <div className="h-4 w-full bg-[#f0ebfe] border border-[#10b981]/10 animate-pulse mx-auto rounded-tl-none rounded-br-none rounded-tr-xl rounded-bl-xl" />
+      </div>
+
+      {/* Category Tabs Skeleton */}
+      <div className="flex justify-center gap-3 pb-8 px-4">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div
+            key={i}
+            className="h-10 w-28 bg-[#f0ebfe] border border-[#10b981]/10 animate-pulse rounded-tl-none rounded-br-none rounded-tr-xl rounded-bl-xl"
+          />
+        ))}
+      </div>
+
+      {/* Pioneer Cards Showcase Skeleton Grid (Diagonal Rounding: rounded-tr-[40px] rounded-bl-[40px]) */}
+      <div className="max-w-4xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 gap-6 py-6">
+        {Array.from({ length: 4 }).map((_, i) => (
+          <div
+            key={i}
+            className="h-48 bg-[#f0ebfe] border border-[#10b981]/10 animate-pulse p-5 flex flex-col justify-between rounded-tl-none rounded-br-none rounded-tr-[40px] rounded-bl-[40px]"
+          >
+            <div className="flex justify-between items-center">
+              <div className="space-y-2 flex-1">
+                <div className="h-5 w-3/4 bg-purple-200/60 rounded-tl-none rounded-br-none rounded-tr-xl rounded-bl-xl mr-0" />
+                <div className="h-3 w-1/2 bg-purple-200/40 rounded-tl-none rounded-br-none rounded-tr-xl rounded-bl-xl mr-0" />
+              </div>
+              <div className="w-14 h-14 bg-purple-200/50 rounded-tl-none rounded-br-none rounded-tr-[20px] rounded-bl-[20px]" />
+            </div>
+            <div className="h-3 w-full bg-purple-200/40 rounded-tl-none rounded-br-none rounded-tr-xl rounded-bl-xl" />
+            <div className="h-4 w-20 bg-purple-300/60 rounded-tl-none rounded-br-none rounded-tr-xl rounded-bl-xl self-end" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function PioneersPage() {
-  const [activeCategoryTab, setActiveCategoryTab] = useState<string>("poets");
-  const [selectedPioneerModal, setSelectedPioneerModal] = useState<MediaItem | null>(null);
-
-  // DATA FETCHED STRICTLY VIA PORTAL SERVICE FROM SRC/DATA/PIONEERSDATA.TS
-  const pioneerCategories = PortalService.getPioneerCategories();
-
-  const categoryTabs = pioneerCategories.map((c) => ({
-    id: c.id,
-    label: c.categoryName,
-  }));
-
-  const currentCategory =
-    pioneerCategories.find((p) => p.id === activeCategoryTab) ||
-    pioneerCategories[0];
-
-  const handleOpenPioneerModal = (fig: PioneerFigure) => {
-    setSelectedPioneerModal({
-      id: fig.id,
-      title: fig.name,
-      subtitle: fig.role,
-      fullBiography: `${fig.biography}${fig.quote ? `\n\nالمقولة والشاهد التراثي: « ${fig.quote} »` : ""}`,
-      year: fig.era,
-      location: fig.location,
-      categoryLabel: currentCategory.categoryName,
-      description: fig.role,
-      bgGradient: fig.bgGradient,
-    });
-  };
-
   return (
-    <div className="min-h-screen bg-white text-slate-900 font-cairo selection:bg-emerald-500 selection:text-white">
-      {/* Navbar Header */}
-      <Navbar activeSection="pioneers" />
-
-      {/* Main Content with Safe Distance Padding below 150px Navbar */}
-      <main className="pt-44 sm:pt-48 lg:pt-52 pb-16">
-        {/* REUSABLE SUBPAGE HERO HEADER */}
-        <SubpageHero
-          tag="الأعلام والشخصيات التاريخية"
-          titlePrefix="أعلام أبين ورواد"
-          titleHighlight="الفكر والتاريخ"
-          description="تخليد لسير العلماء، الشعراء، القادة، ورواد التنمية والنهضة الذين صاغوا الوجدان الأبيني والوطني"
-        />
-
-        {/* REUSABLE CATEGORY TAB SELECTOR */}
-        <CategoryTabSelector
-          tabs={categoryTabs}
-          activeTab={activeCategoryTab}
-          onSelectTab={setActiveCategoryTab}
-        />
-
-        {/* PIONEER PROFILE CARDS SHOWCASE GRID */}
-        <SmartContainer>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentCategory.id}
-              initial={curtainOverlayVariants.initial}
-              animate={curtainOverlayVariants.animate}
-              exit={curtainOverlayVariants.exit}
-              transition={curtainOverlayTransition}
-              className="space-y-8 max-w-4xl mx-auto"
-            >
-              {/* Category Header Title */}
-              <div className="text-right space-y-1">
-                <span className="text-xs font-normal text-[#10b981] font-abyan-title block">
-                  قسم {currentCategory.categoryName}
-                </span>
-                <h2 className="font-abyan-title text-2xl sm:text-3xl text-slate-900 font-normal">
-                  {currentCategory.title}
-                </h2>
-                <p className="text-xs text-slate-500 font-abyan-title font-normal">
-                  {currentCategory.subtitle}
-                </p>
-              </div>
-
-              {/* REUSABLE PIONEER CARDS GRID USING UNIVERSAL CARD */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {currentCategory.figures.map((fig) => (
-                  <UniversalCard
-                    key={fig.id}
-                    variant="pioneer"
-                    data={{
-                      id: fig.id,
-                      title: fig.name,
-                      category: fig.role,
-                      era: fig.era,
-                      location: fig.location,
-                      description: fig.biography,
-                      quote: fig.quote,
-                      bgGradient: fig.bgGradient,
-                      linkText: "معاينة ←",
-                    }}
-                    onClick={() => handleOpenPioneerModal(fig)}
-                  />
-                ))}
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </SmartContainer>
-
-        {/* UNIFIED MEDIA VIEWER MODAL FOR PIONEER FULL PROFILE */}
-        <UnifiedMediaViewer
-          item={selectedPioneerModal}
-          onClose={() => setSelectedPioneerModal(null)}
-        />
-
-      </main>
-
-      {/* Footer */}
-      <Footer />
-    </div>
+    <Suspense fallback={<PioneersSkeleton />}>
+      <PioneersDataWrapper />
+    </Suspense>
   );
 }
