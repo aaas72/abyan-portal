@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { curtainOverlayVariants, curtainOverlayTransition } from "@/lib/animations";
 
@@ -13,6 +13,17 @@ interface UnifiedMediaViewerProps {
 }
 
 export default function UnifiedMediaViewer({ item, onClose }: UnifiedMediaViewerProps) {
+  useEffect(() => {
+    if (item) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [item]);
+
   if (!item) return null;
 
   return (
@@ -21,6 +32,7 @@ export default function UnifiedMediaViewer({ item, onClose }: UnifiedMediaViewer
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
+        onClick={onClose}
         className="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
       >
         <motion.div
