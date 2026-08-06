@@ -466,7 +466,7 @@ export function DistrictsPageContent() {
                                 const parts = detail.split(" - ");
                                 const name = parts[0] || detail;
                                 const shortRole = parts[1] || `رمز تاريخي ومساهم بارز في مسيرة مديرية ${activeDistrict.name}.`;
-                                const extendedBio = `شخصية وطنية وتاريخية بارزة ينتمي لمديرية ${activeDistrict.name} بمحافظة أبين.\n\n${shortRole}\n\nساهم بصورة جليلة ومؤثرة في صياغة التاريخ الإداري والتراث الحضاري والاجتماعي لمحافظة أبين والوطن، وظلت بصماته شواهد خالدة تتوارثها الأجيال.`;
+                                const extendedBio = `يعتبر ${name} من الشخصيات الوطنية والتاريخية البارزة التي تنتمي لمديرية ${activeDistrict.name} بمحافظة أبين.\n\nتميز بدوره الريادي ومساهمته الفاعلة في صياغة التاريخ الإداري والتراث الحضاري والاجتماعي لمحافظة أبين والوطن.\n\nظلت أعماله ومآثره شواهد خالدة تتوارثها الأجيال ومحفوظة في سجلات الذاكرة الوطنية للأرشيف الرقمي لبوابة أبين الثقافية.`;
                                 return (
                                   <UniversalCard
                                     key={idx}
@@ -479,7 +479,6 @@ export function DistrictsPageContent() {
                                         fullBiography: extendedBio,
                                         categoryLabel: `رمز تاريخي • مديرية ${activeDistrict.name}`,
                                         location: activeDistrict.name,
-                                        description: shortRole,
                                         year: "رواد أبين",
                                         bgGradient: idx % 2 === 0
                                           ? "from-emerald-950 via-slate-800 to-slate-900"
@@ -500,33 +499,36 @@ export function DistrictsPageContent() {
                                 );
                               })
                             ) : (
-                              activeDistrict.famousPioneers?.map((pioneer, idx) => (
-                                <UniversalCard
-                                  key={idx}
-                                  variant="pioneer"
-                                  onClick={() =>
-                                    setSelectedMediaItem({
-                                      id: `famous-${idx}`,
+                              activeDistrict.famousPioneers?.map((pioneer, idx) => {
+                                const shortRole = `علم ورمز تاريخي بارز من أعلام مديرية ${activeDistrict.name}`;
+                                const extendedBio = `${pioneer} هو أحد أعمدة وشخصيات مديرية ${activeDistrict.name} البارزة في التاريخ والتراث الأبيني.\n\nقدم مساهمات مشهودة في حفظ التراث والقيادة والخدمة الاجتماعية التي خلّدت اسمه في ذاكرة المحافظة.\n\nتظل مسيرته الوطنية وسيرته الذاتية محفوظة في سجلات الأرشيف الرقمي لبوابة أبين الثقافية.`;
+                                return (
+                                  <UniversalCard
+                                    key={idx}
+                                    variant="pioneer"
+                                    onClick={() =>
+                                      setSelectedMediaItem({
+                                        id: `famous-${idx}`,
+                                        title: pioneer,
+                                        subtitle: shortRole,
+                                        fullBiography: extendedBio,
+                                        categoryLabel: `علم بالمديرية • ${activeDistrict.name}`,
+                                        location: activeDistrict.name,
+                                        year: "رواد أبين",
+                                        bgGradient: "from-emerald-950 via-slate-800 to-slate-900",
+                                      })
+                                    }
+                                    data={{
                                       title: pioneer,
-                                      subtitle: `رمز وعلم من أعلام مديرية ${activeDistrict.name}`,
-                                      fullBiography: `${pioneer} هو أحد أعمدة وشخصيات مديرية ${activeDistrict.name} البارزة في التاريخ والتراث الأبيني. قدم مساهمات مشهودة في حفظ التراث، القيادة، والخدمة الاجتماعية التي خلّدت اسمه في ذاكرة المحافظة.`,
-                                      categoryLabel: `علم بالمديرية • ${activeDistrict.name}`,
+                                      category: `علم بالمديرية • ${activeDistrict.name}`,
+                                      description: shortRole,
                                       location: activeDistrict.name,
-                                      description: `أحد أعمدة وشخصيات مديرية ${activeDistrict.name} البارزة في التاريخ والتراث الأبيني.`,
-                                      year: "رواد أبين",
-                                      bgGradient: "from-emerald-950 via-slate-800 to-slate-900",
-                                    })
-                                  }
-                                  data={{
-                                    title: pioneer,
-                                    category: `علم بالمديرية • ${activeDistrict.name}`,
-                                    description: `أحد أعمدة وشخصيات مديرية ${activeDistrict.name} البارزة في التاريخ والتراث الأبيني.`,
-                                    location: activeDistrict.name,
-                                    era: "رواد أبين",
-                                    bgGradient: "from-emerald-950 via-slate-800 to-slate-900"
-                                  }}
-                                />
-                              ))
+                                      era: "رواد أبين",
+                                      bgGradient: "from-emerald-950 via-slate-800 to-slate-900"
+                                    }}
+                                  />
+                                );
+                              })
                             )}
                           </div>
                         </div>
@@ -540,57 +542,67 @@ export function DistrictsPageContent() {
                           </h4>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {activeDistrict.historicalSites && activeDistrict.historicalSites.length > 0 ? (
-                              activeDistrict.historicalSites.map((site, idx) => (
-                                <UniversalCard
-                                  key={idx}
-                                  variant="food"
-                                  onClick={() =>
-                                    setSelectedMediaItem({
-                                      id: `site-${idx}`,
+                              activeDistrict.historicalSites.map((site, idx) => {
+                                const shortDesc = `صرح وموقع أثري تاريخي ينتمي لمديرية ${activeDistrict.name}`;
+                                const fullDesc = `يمثل ${site} أحد أهم الشواهد والمعالم التاريخية والهندسية البارزة في مديرية ${activeDistrict.name} بمحافظة أبين.\n\nيمتاز هذا الصرح القائم بموقعه التراثي وأصالته المعمارية التي قاومت عوادم الزمن، حيث يعكس مهارة الإنسان الأبيني في البناء وعمارة القلاع وحماية الثغور وإدارة الموارد والري.\n\nيحظى هذا المعلم بقيمة تاريخية وثقافية رفيعة تجعل منه مقصداً هاماً للباحثين والمؤرخين والزوار الاستكشافيين لمعالم أبين الخالدة.`;
+                                return (
+                                  <UniversalCard
+                                    key={idx}
+                                    variant="food"
+                                    onClick={() =>
+                                      setSelectedMediaItem({
+                                        id: `site-${idx}`,
+                                        title: site,
+                                        subtitle: shortDesc,
+                                        fullBiography: fullDesc,
+                                        categoryLabel: `معلم أثري • مديرية ${activeDistrict.name}`,
+                                        location: activeDistrict.name,
+                                        bgGradient: idx % 2 === 0
+                                          ? "from-emerald-950 via-sky-900 to-slate-900"
+                                          : "from-sky-950 via-emerald-900 to-slate-900",
+                                      })
+                                    }
+                                    data={{
                                       title: site,
-                                      categoryLabel: `معلم أثري • مديرية ${activeDistrict.name}`,
+                                      category: `معلم أثري • ${activeDistrict.name}`,
+                                      description: shortDesc,
                                       location: activeDistrict.name,
-                                      description: `صرح أثري تاريخي معبر يعكس أصالة المعمار والمنعة التاريخية في مديرية ${activeDistrict.name}.`,
                                       bgGradient: idx % 2 === 0
                                         ? "from-emerald-950 via-sky-900 to-slate-900"
-                                        : "from-sky-950 via-emerald-900 to-slate-900",
-                                    })
-                                  }
-                                  data={{
-                                    title: site,
-                                    category: `معلم أثري • ${activeDistrict.name}`,
-                                    description: `صرح أثري تاريخي معبر يعكس أصالة المعمار والمنعة التاريخية في مديرية ${activeDistrict.name}.`,
-                                    location: activeDistrict.name,
-                                    bgGradient: idx % 2 === 0
-                                      ? "from-emerald-950 via-sky-900 to-slate-900"
-                                      : "from-sky-950 via-emerald-900 to-slate-900"
-                                  }}
-                                />
-                              ))
+                                        : "from-sky-950 via-emerald-900 to-slate-900"
+                                    }}
+                                  />
+                                );
+                              })
                             ) : (
-                              activeDistrict.landmarks.map((landmark, idx) => (
-                                <UniversalCard
-                                  key={idx}
-                                  variant="food"
-                                  onClick={() =>
-                                    setSelectedMediaItem({
-                                      id: `landmark-${idx}`,
+                              activeDistrict.landmarks.map((landmark, idx) => {
+                                const shortDesc = `معلم طبيعي وجغرافي بارز في مديرية ${activeDistrict.name}`;
+                                const fullDesc = `يمثل ${landmark} أحد أهم شواهد التضاريس والتراث الجغرافي البارز في مديرية ${activeDistrict.name} بمحافظة أبين.\n\nيشكل هذا المعلم ركناً متكاملاً من الطبيعة الأبينية المعطاءة، سواء في الوديان الخصيبة أو السلاسل الجبلية أو الموانئ الساحلية.\n\nيحظى بمكانة سياحية وتاريخية رفيعة لدى أبناء أبين والزوار.`;
+                                return (
+                                  <UniversalCard
+                                    key={idx}
+                                    variant="food"
+                                    onClick={() =>
+                                      setSelectedMediaItem({
+                                        id: `landmark-${idx}`,
+                                        title: landmark,
+                                        subtitle: shortDesc,
+                                        fullBiography: fullDesc,
+                                        categoryLabel: `معلم بارز • مديرية ${activeDistrict.name}`,
+                                        location: activeDistrict.name,
+                                        bgGradient: "from-emerald-950 via-sky-900 to-slate-900",
+                                      })
+                                    }
+                                    data={{
                                       title: landmark,
-                                      categoryLabel: `معلم بارز • مديرية ${activeDistrict.name}`,
+                                      category: `معلم بارز • ${activeDistrict.name}`,
+                                      description: shortDesc,
                                       location: activeDistrict.name,
-                                      description: `أحد أهم معالم الطبيعة والتراث الجغرافي البارز في مديرية ${activeDistrict.name}.`,
-                                      bgGradient: "from-emerald-950 via-sky-900 to-slate-900",
-                                    })
-                                  }
-                                  data={{
-                                    title: landmark,
-                                    category: `معلم بارز • ${activeDistrict.name}`,
-                                    description: `أحد أهم معالم الطبيعة والتراث الجغرافي البارز في مديرية ${activeDistrict.name}.`,
-                                    location: activeDistrict.name,
-                                    bgGradient: "from-emerald-950 via-sky-900 to-slate-900"
-                                  }}
-                                />
-                              ))
+                                      bgGradient: "from-emerald-950 via-sky-900 to-slate-900"
+                                    }}
+                                  />
+                                );
+                              })
                             )}
                           </div>
                         </div>
@@ -608,29 +620,34 @@ export function DistrictsPageContent() {
                             أبرز المحاصيل والمنتجات الزراعية والحيوانية:
                           </h4>
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                            {activeDistrict.crops.map((crop, idx) => (
-                              <UniversalCard
-                                key={idx}
-                                variant="food"
-                                onClick={() =>
-                                  setSelectedMediaItem({
-                                    id: `crop-${idx}`,
+                            {activeDistrict.crops.map((crop, idx) => {
+                              const shortDesc = `محصول وثروة خصيبة تزرع في أرض ${activeDistrict.name}`;
+                              const fullDesc = `تشكل زراعة وإنتاج ${crop} ركناً أساسياً من المقومات الاقتصادية والثروات الخصيبة التي تتميز بها مديرية ${activeDistrict.name} بمحافظة أبين.\n\nتعتمد هذه الزراعة على جودة التربة الطمية ومياه سيول وادي بنا وحسان وأودية أبين الخصيبة، مما يمنح المحصول جودة فائقة ومكانة تجارية رفيعة في المحافظة والوطن.\n\nتساهم هذه الثروة في رفد السلة الغذائية لليمن وتأمين مصدر الدخل الرئيسي لمئات الفلاحين والأسر الزراعية بالمديرية.`;
+                              return (
+                                <UniversalCard
+                                  key={idx}
+                                  variant="food"
+                                  onClick={() =>
+                                    setSelectedMediaItem({
+                                      id: `crop-${idx}`,
+                                      title: crop,
+                                      subtitle: shortDesc,
+                                      fullBiography: fullDesc,
+                                      categoryLabel: `خيرات الأرض • مديرية ${activeDistrict.name}`,
+                                      location: activeDistrict.name,
+                                      bgGradient: "from-emerald-950 via-slate-800 to-sky-900",
+                                    })
+                                  }
+                                  data={{
                                     title: crop,
-                                    categoryLabel: `خيرات الأرض • مديرية ${activeDistrict.name}`,
+                                    category: `خيرات الأرض • ${activeDistrict.name}`,
+                                    description: shortDesc,
                                     location: activeDistrict.name,
-                                    description: `محصول وإنتاج فاخر تشتهر به أرض وأودية مديرية ${activeDistrict.name}.`,
-                                    bgGradient: "from-emerald-950 via-slate-800 to-sky-900",
-                                  })
-                                }
-                                data={{
-                                  title: crop,
-                                  category: `خيرات الأرض • ${activeDistrict.name}`,
-                                  description: `محصول وإنتاج فاخر تشتهر به أرض وأودية مديرية ${activeDistrict.name}.`,
-                                  location: activeDistrict.name,
-                                  bgGradient: "from-emerald-950 via-slate-800 to-sky-900"
-                                }}
-                              />
-                            ))}
+                                    bgGradient: "from-emerald-950 via-slate-800 to-sky-900"
+                                  }}
+                                />
+                              );
+                            })}
                           </div>
                         </div>
                       )}
@@ -649,29 +666,34 @@ export function DistrictsPageContent() {
                                 الفنون الشعبية وأصالة الموروث الأبيني:
                               </h4>
                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                {activeDistrict.folkHeritage.map((item, idx) => (
-                                  <UniversalCard
-                                    key={idx}
-                                    variant="food"
-                                    onClick={() =>
-                                      setSelectedMediaItem({
-                                        id: `heritage-${idx}`,
+                                {activeDistrict.folkHeritage.map((item, idx) => {
+                                  const shortDesc = `فن وموروث فلكلوري يتوارثه أهالي ${activeDistrict.name}`;
+                                  const fullDesc = `يمثل ${item} واحداً من أصيل ألوان الموروث الشفاهي والفنون الشعبية التي تنبض بالروح الثقافية والاجتماعية في مديرية ${activeDistrict.name} بمحافظة أبين.\n\nيتوارث الأهالي هذا الفن الفلكلوري في الأعياد والمناسبات الوطنية ومواسم الري والحصاد، حيث تعكس الأشعار والزوامل والألحان الشجاعة، التكاتف، وأصالة الهوية الأبينية.\n\nيحافظ أبناء ${activeDistrict.name} على هذا المأثور الحي كرمز من رموز الأصالة والاعتزاز بالتراث والذاكرة الوطنية.`;
+                                  return (
+                                    <UniversalCard
+                                      key={idx}
+                                      variant="food"
+                                      onClick={() =>
+                                        setSelectedMediaItem({
+                                          id: `heritage-${idx}`,
+                                          title: item,
+                                          subtitle: shortDesc,
+                                          fullBiography: fullDesc,
+                                          categoryLabel: `موروث وفلكلور • مديرية ${activeDistrict.name}`,
+                                          location: activeDistrict.name,
+                                          bgGradient: "from-sky-950 via-emerald-950 to-slate-900",
+                                        })
+                                      }
+                                      data={{
                                         title: item,
-                                        categoryLabel: `موروث وفلكلور • مديرية ${activeDistrict.name}`,
+                                        category: `موروث وفلكلور • ${activeDistrict.name}`,
+                                        description: shortDesc,
                                         location: activeDistrict.name,
-                                        description: `لون فلكلوري وفن شعب أصيل يتوارثه أهالي مديرية ${activeDistrict.name} في الأعياد والمناسبات.`,
-                                        bgGradient: "from-sky-950 via-emerald-950 to-slate-900",
-                                      })
-                                    }
-                                    data={{
-                                      title: item,
-                                      category: `موروث وفلكلور • ${activeDistrict.name}`,
-                                      description: `لون فلكلوري وفن شعب أصيل يتوارثه أهالي مديرية ${activeDistrict.name} في الأعياد والمناسبات.`,
-                                      location: activeDistrict.name,
-                                      bgGradient: "from-sky-950 via-emerald-950 to-slate-900"
-                                    }}
-                                  />
-                                ))}
+                                        bgGradient: "from-sky-950 via-emerald-950 to-slate-900"
+                                      }}
+                                    />
+                                  );
+                                })}
                               </div>
                             </div>
                           )}
