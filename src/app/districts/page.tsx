@@ -318,7 +318,7 @@ export function DistrictsPageContent() {
                 اختر المديرية للاستعراض الموسوعي الشامل:
               </span>
 
-              <div className="grid grid-cols-1 gap-1.5 border-r border-slate-100 pr-3 max-h-[680px] overflow-y-auto pl-1 custom-scrollbar">
+              <div className="grid grid-cols-1 gap-1.5 border-r border-slate-100 pr-3">
                 {filteredDistricts.map((dist) => {
                   const isSelected = selectedDistrictId === dist.id;
 
