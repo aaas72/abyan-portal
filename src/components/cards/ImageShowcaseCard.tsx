@@ -59,10 +59,9 @@ export default function ImageShowcaseCard({
       </div>
 
       {/* Prompt Link */}
-      <div className="pt-1 flex justify-between items-center text-[10px] text-sky-600 font-abyan-title border-none">
-        <span>عرض المشهد بالكامل</span>
-        <span className="group-hover:translate-x-[-3px] transition-transform font-normal">
-          تأطير المكثف ←
+      <div className="pt-1 text-left text-xs text-sky-600 font-abyan-title border-none">
+        <span className="group-hover:translate-x-[-3px] transition-transform font-normal inline-block">
+          معاينة ←
         </span>
       </div>
     </motion.div>
