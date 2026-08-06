@@ -146,3 +146,26 @@ p.font-abyan-body {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+/* 🌿 Abyan Spring Green & Sky Blue Smooth Shimmer Animation (Reversed Movement Direction) */
+@keyframes abyanShimmerLtr {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-abyan-shimmer-rtl {
+  background: linear-gradient(
+    90deg,
+    rgba(16, 185, 129, 0.08) 0%,
+    rgba(14, 165, 233, 0.22) 50%,
+    rgba(16, 185, 129, 0.08) 100%
+  );
+  background-size: 200% 100%;
+  animation: abyanShimmerLtr 2.2s infinite linear;
+}
+
+

@@ -3,20 +3,20 @@
 import React from "react";
 
 /**
- * 🌿 Shimmer Base Utility
- * Soft, elegant light-theme shimmer matching Abyan Portal palette
+ * 🌿 Abyan Shimmer Base Utility
+ * Right-to-Left (RTL) Spring Green & Sky Blue smooth shimmer animation
+ * Borderless with clean system rounded corners
  */
 export function SkeletonBase({ className = "" }: { className?: string }) {
   return (
     <div
-      className={`bg-gradient-to-r from-slate-100 via-emerald-50/70 to-slate-100 animate-pulse ${className}`}
+      className={`animate-abyan-shimmer-rtl border-none outline-none ${className}`}
     />
   );
 }
 
 /**
- * ✒️ Realistic Single Text Line Skeleton
- * Simulates real font typography with natural baseline height & soft rounded edges
+ * ✒️ Single Text Line Skeleton (Borderless, natural Arabic typography height)
  */
 export function SkeletonTextLine({
   height = "h-3.5",
@@ -29,14 +29,13 @@ export function SkeletonTextLine({
 }) {
   return (
     <SkeletonBase
-      className={`${height} ${width} rounded-md bg-slate-200/60 ${className}`}
+      className={`${height} ${width} rounded-md ${className}`}
     />
   );
 }
 
 /**
  * 📝 Realistic Paragraph Text Skeleton
- * Renders multi-line natural Arabic paragraph text with varying line lengths & proper leading spacing
  */
 export function SkeletonParagraph({
   lines = 3,
@@ -64,7 +63,6 @@ export function SkeletonParagraph({
           key={idx}
           height="h-3"
           width={lineWidths[idx % lineWidths.length]}
-          className="bg-slate-200/70"
         />
       ))}
     </div>
@@ -72,105 +70,106 @@ export function SkeletonParagraph({
 }
 
 /**
- * 1. SubpageHero Skeleton (Realistic Typography Match for SubpageHero.tsx)
+ * 1. SubpageHero Skeleton (1-to-1 Blueprint Copy, Borderless)
  */
 export function SubpageHeroSkeleton() {
   return (
     <section className="pt-6 sm:pt-10 pb-6 sm:pb-8 text-center max-w-3xl mx-auto space-y-3 sm:space-y-4 px-4">
       {/* Category Tag Pill */}
-      <div className="inline-block py-1 sm:py-1.5 px-3 sm:px-4 rounded-full bg-emerald-500/10 border border-emerald-500/10">
-        <SkeletonBase className="h-3.5 sm:h-4 w-32 sm:w-44 rounded-full bg-emerald-200/70" />
+      <div className="inline-block py-1 sm:py-1.5 px-3 sm:px-4 rounded-full bg-emerald-500/10 border-none">
+        <SkeletonBase className="h-3.5 sm:h-4 w-32 sm:w-44 rounded-full" />
       </div>
 
-      {/* Main Title Line - Realistic Display Font Height */}
+      {/* Main Title Line */}
       <div className="pt-1 flex justify-center">
-        <SkeletonBase className="h-8 sm:h-11 w-3/4 max-w-md rounded-xl bg-slate-300/70" />
+        <SkeletonBase className="h-8 sm:h-11 w-3/4 max-w-md rounded-xl" />
       </div>
 
       {/* Description Paragraph Lines */}
       <div className="pt-1 max-w-2xl mx-auto space-y-2">
-        <SkeletonTextLine height="h-3.5" width="w-full" className="mx-auto bg-slate-200/80" />
-        <SkeletonTextLine height="h-3.5" width="w-4/5" className="mx-auto bg-slate-200/60" />
+        <SkeletonTextLine height="h-3.5" width="w-full" className="mx-auto" />
+        <SkeletonTextLine height="h-3.5" width="w-4/5" className="mx-auto" />
       </div>
     </section>
   );
 }
 
 /**
- * 2. CategoryTabSelector Skeleton (Realistic Pill Tabs)
+ * 2. CategoryTabSelector Skeleton (Borderless, System Rounded Pills)
  */
 export function CategoryTabSelectorSkeleton({ count = 5 }: { count?: number }) {
   return (
     <div className="w-full max-w-4xl mx-auto px-4 py-4 sm:py-6 relative z-10">
       <div className="flex items-center justify-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar py-1">
         {/* Navigation Arrow Left Placeholder */}
-        <SkeletonBase className="h-7 w-5 rounded-md shrink-0 bg-emerald-100/60" />
+        <SkeletonBase className="h-7 w-5 rounded-md shrink-0" />
 
         {/* Tab Pills Row */}
         {Array.from({ length: count }).map((_, i) => (
           <SkeletonBase
             key={i}
-            className={`h-8 sm:h-9 rounded-full shrink-0 border border-slate-100 ${
-              i === 0 ? "w-28 sm:w-36 bg-emerald-100/90" : "w-24 sm:w-32 bg-slate-100"
+            className={`h-8 sm:h-9 rounded-full shrink-0 border-none ${
+              i === 0 ? "w-28 sm:w-36" : "w-24 sm:w-32"
             }`}
           />
         ))}
 
         {/* Navigation Arrow Right Placeholder */}
-        <SkeletonBase className="h-7 w-5 rounded-md shrink-0 bg-emerald-100/60" />
+        <SkeletonBase className="h-7 w-5 rounded-md shrink-0" />
       </div>
     </div>
   );
 }
 
 /**
- * 3. UniversalCard Pioneer Variant Skeleton
+ * 3. UniversalCard Pioneer Variant Skeleton (Borderless, System rounded-2xl sm:rounded-3xl)
  */
 export function PioneerCardSkeleton() {
   return (
-    <div className="bg-white/90 rounded-2xl sm:rounded-3xl p-5 sm:p-6 border border-slate-100/80 space-y-4 shadow-sm text-right w-full flex flex-col justify-between">
-      {/* Header Row: Title & Tag */}
+    <div className="bg-white/95 rounded-2xl sm:rounded-3xl p-5 sm:p-6 border-none space-y-4 shadow-sm text-right w-full flex flex-col justify-between">
+      {/* Header Row */}
       <div className="flex items-center justify-between gap-3">
-        <SkeletonTextLine height="h-5 sm:h-6" width="w-1/2" className="bg-slate-300/80 rounded-md" />
-        <SkeletonBase className="h-5 w-24 rounded-full bg-emerald-100/90 shrink-0" />
+        <SkeletonTextLine height="h-5 sm:h-6" width="w-1/2" className="rounded-md" />
+        <SkeletonBase className="h-5 w-24 rounded-full shrink-0" />
       </div>
 
-      {/* Subtitle Line */}
-      <SkeletonTextLine height="h-3.5" width="w-1/3" className="bg-sky-100/80 rounded-md" />
+      {/* Subtitle */}
+      <SkeletonTextLine height="h-3.5" width="w-1/3" className="rounded-md" />
 
       {/* Realistic Narrative Paragraph */}
       <SkeletonParagraph lines={3} align="right" />
 
       {/* Footer Row */}
-      <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
-        <SkeletonTextLine height="h-3" width="w-28" className="bg-slate-200/50" />
-        <SkeletonBase className="h-4 w-14 rounded-md bg-emerald-100/90" />
+      <div className="pt-3 border-none flex items-center justify-between">
+        <SkeletonTextLine height="h-3" width="w-28" />
+        <SkeletonBase className="h-4 w-14 rounded-md" />
       </div>
     </div>
   );
 }
 
 /**
- * 4. ImageShowcaseCard Skeleton
+ * 4. ImageShowcaseCard Skeleton (Borderless, System rounded-2xl sm:rounded-3xl)
  */
 export function ImageShowcaseCardSkeleton() {
   return (
-    <div className="bg-white/90 rounded-2xl sm:rounded-3xl p-4 sm:p-5 border border-slate-100/80 space-y-3.5 shadow-sm text-right w-full flex flex-col justify-between">
+    <div className="bg-white/95 rounded-2xl sm:rounded-3xl p-4 sm:p-5 border-none space-y-3.5 shadow-sm text-right w-full flex flex-col justify-between">
       {/* Aspect Video Image Box */}
-      <div className="w-full aspect-video rounded-xl sm:rounded-2xl overflow-hidden relative bg-slate-100/90 p-4 flex flex-col justify-between">
-        <SkeletonBase className="h-3 w-20 rounded bg-emerald-200/60 mr-0" />
-        <SkeletonBase className="h-3 w-28 rounded bg-sky-200/60 mr-0" />
+      <div className="w-full aspect-video rounded-xl sm:rounded-2xl overflow-hidden relative border-none p-4 flex flex-col justify-between">
+        <SkeletonBase className="w-full h-full absolute inset-0" />
+        <SkeletonBase className="h-3 w-20 rounded relative z-10 mr-0" />
+        <SkeletonBase className="h-3 w-28 rounded relative z-10 mr-0" />
       </div>
 
       {/* Title & Description Paragraph */}
       <div className="space-y-2">
-        <SkeletonTextLine height="h-5 sm:h-6" width="w-3/4" className="bg-slate-300/80 rounded-md" />
+        <SkeletonTextLine height="h-5 sm:h-6" width="w-3/4" className="rounded-md" />
         <SkeletonParagraph lines={2} align="right" />
       </div>
 
       {/* Prompt Link Footer */}
       <div className="pt-1 text-left">
-        <SkeletonBase className="h-3.5 w-16 rounded-md bg-sky-100/90 inline-block" />
+        <SkeletonBase className="h-3.5 w-16 rounded-md inline-block" />
       </div>
     </div>
   );
@@ -179,64 +178,65 @@ export function ImageShowcaseCardSkeleton() {
 export const ContentCardSkeleton = ImageShowcaseCardSkeleton;
 
 /**
- * 5. FoodCard Skeleton
+ * 5. FoodCard Skeleton (Borderless, System rounded-2xl)
  */
 export function FoodCardSkeleton() {
   return (
-    <div className="bg-gradient-to-br from-emerald-100/70 via-white to-sky-100/70 rounded-2xl p-4 space-y-3 shadow-none text-right w-full flex flex-col justify-between">
+    <div className="bg-white/95 rounded-2xl p-4 border-none space-y-3 shadow-none text-right w-full flex flex-col justify-between">
       {/* Square Image Box */}
-      <div className="w-full aspect-square rounded-xl overflow-hidden relative bg-slate-100/80 p-4 flex flex-col justify-between">
-        <SkeletonBase className="h-3 w-16 rounded bg-emerald-200/60 mr-0" />
-        <SkeletonBase className="h-3 w-24 rounded bg-sky-200/60 mr-0" />
+      <div className="w-full aspect-square rounded-xl overflow-hidden relative border-none p-4 flex flex-col justify-between">
+        <SkeletonBase className="w-full h-full absolute inset-0" />
+        <SkeletonBase className="h-3 w-16 rounded relative z-10 mr-0" />
+        <SkeletonBase className="h-3 w-24 rounded relative z-10 mr-0" />
       </div>
 
       {/* Title & Paragraph */}
       <div className="space-y-1.5">
-        <SkeletonTextLine height="h-4 sm:h-5" width="w-4/5" className="bg-slate-300/80 rounded-md" />
+        <SkeletonTextLine height="h-4 sm:h-5" width="w-4/5" className="rounded-md" />
         <SkeletonParagraph lines={2} align="right" />
       </div>
 
       {/* Prompt Link Footer */}
       <div className="pt-1 text-left">
-        <SkeletonBase className="h-3.5 w-14 rounded-md bg-sky-100/90 inline-block" />
+        <SkeletonBase className="h-3.5 w-14 rounded-md inline-block" />
       </div>
     </div>
   );
 }
 
 /**
- * 6. District Showcase Detail Skeleton
+ * 6. District Showcase Detail Skeleton (Borderless)
  */
 export function DistrictDetailSkeleton() {
   return (
     <div className="w-full">
       {/* Desktop 2-Column Split View */}
       <div className="hidden lg:flex gap-8 items-start w-full">
-        {/* Right Sidebar Column */}
+        {/* Right Sidebar Column (w-[270px]) */}
         <div className="w-[270px] shrink-0 space-y-3 text-right">
-          <SkeletonTextLine height="h-3.5" width="w-44" className="bg-slate-300/70 rounded mb-2" />
-          <div className="grid grid-cols-1 gap-1.5 border-r border-slate-100 pr-3">
+          <SkeletonTextLine height="h-3.5" width="w-44" className="rounded mb-2" />
+          <div className="grid grid-cols-1 gap-1.5 border-none pr-3">
             {Array.from({ length: 7 }).map((_, i) => (
-              <div key={i} className="py-3 px-1 space-y-1.5 border-b border-slate-100">
-                <SkeletonTextLine height="h-4" width="w-3/4" className="bg-slate-300/80 rounded" />
-                <SkeletonTextLine height="h-3" width="w-1/2" className="bg-slate-200/50 rounded" />
+              <div key={i} className="py-3 px-1 space-y-1.5 border-none">
+                <SkeletonTextLine height="h-4" width="w-3/4" className="rounded-md" />
+                <SkeletonTextLine height="h-3" width="w-1/2" className="rounded-sm" />
               </div>
             ))}
           </div>
         </div>
 
         {/* Left Column Active District Showcase */}
-        <div className="flex-1 min-w-0 bg-white p-6 sm:p-8 space-y-6 text-right">
+        <div className="flex-1 min-w-0 bg-white border-none rounded-3xl p-6 sm:p-8 space-y-6 text-right">
           {/* Header Info */}
           <div className="space-y-1.5">
-            <SkeletonTextLine height="h-3.5" width="w-40" className="bg-emerald-100/90 rounded" />
-            <SkeletonTextLine height="h-3" width="w-56" className="bg-slate-200/60 rounded" />
+            <SkeletonTextLine height="h-3.5" width="w-40" className="rounded" />
+            <SkeletonTextLine height="h-3" width="w-56" className="rounded" />
           </div>
 
           {/* Title & Subtitle */}
           <div className="space-y-2">
-            <SkeletonTextLine height="h-8 sm:h-10" width="w-2/3" className="bg-slate-300/80 rounded-xl" />
-            <SkeletonTextLine height="h-4" width="w-1/2" className="bg-sky-100/90 rounded-md" />
+            <SkeletonTextLine height="h-8 sm:h-10" width="w-2/3" className="rounded-xl" />
+            <SkeletonTextLine height="h-4" width="w-1/2" className="rounded-md" />
           </div>
 
           {/* Subtab Selector Pills */}
@@ -244,8 +244,8 @@ export function DistrictDetailSkeleton() {
             {Array.from({ length: 7 }).map((_, i) => (
               <SkeletonBase
                 key={i}
-                className={`h-8 rounded-full shrink-0 ${
-                  i === 0 ? "w-28 bg-emerald-100/90" : "w-24 bg-slate-100"
+                className={`h-8 rounded-full shrink-0 border-none ${
+                  i === 0 ? "w-28" : "w-24"
                 }`}
               />
             ))}
@@ -266,15 +266,15 @@ export function DistrictDetailSkeleton() {
 
       {/* Mobile Accordion Skeleton View */}
       <div className="block lg:hidden space-y-3 text-right">
-        <SkeletonTextLine height="h-3.5" width="w-44" className="bg-slate-300/70 rounded mb-3" />
+        <SkeletonTextLine height="h-3.5" width="w-44" className="rounded mb-3" />
         {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="border-b border-slate-100 pb-4 space-y-2">
+          <div key={i} className="border-none pb-4 space-y-2">
             <div className="py-2 flex items-center justify-between">
               <div className="space-y-1 flex-1 pl-3 text-right">
-                <SkeletonTextLine height="h-5" width="w-1/2" className="bg-slate-300/80 rounded-md" />
-                <SkeletonTextLine height="h-3" width="w-1/3" className="bg-slate-200/60 rounded-sm" />
+                <SkeletonTextLine height="h-5" width="w-1/2" className="rounded-md" />
+                <SkeletonTextLine height="h-3" width="w-1/3" className="rounded-sm" />
               </div>
-              <SkeletonBase className="h-3.5 w-16 rounded bg-sky-100" />
+              <SkeletonBase className="h-3.5 w-16 rounded" />
             </div>
           </div>
         ))}
@@ -288,17 +288,17 @@ export function DistrictDetailSkeleton() {
  */
 export function MediaViewerModalSkeleton() {
   return (
-    <div className="bg-white rounded-3xl p-6 sm:p-8 space-y-6 max-w-2xl w-full text-right shadow-2xl border border-slate-100">
+    <div className="bg-white rounded-3xl p-6 sm:p-8 space-y-6 max-w-2xl w-full text-right shadow-2xl border-none">
       <div className="flex flex-row-reverse gap-4 sm:gap-6 items-start">
-        <SkeletonBase className="w-28 h-28 sm:w-40 sm:h-40 rounded-2xl shrink-0 border border-emerald-100" />
+        <SkeletonBase className="w-28 h-28 sm:w-40 sm:h-40 rounded-2xl shrink-0 border-none" />
         <div className="space-y-3 flex-1">
-          <SkeletonBase className="h-4 w-24 mr-0 rounded bg-emerald-100" />
-          <SkeletonTextLine height="h-7" width="w-3/4" className="bg-slate-300/80 rounded-lg" />
-          <SkeletonTextLine height="h-4" width="w-1/2" className="bg-slate-200/60 rounded" />
+          <SkeletonBase className="h-4 w-24 mr-0 rounded" />
+          <SkeletonTextLine height="h-7" width="w-3/4" className="rounded-lg" />
+          <SkeletonTextLine height="h-4" width="w-1/2" className="rounded" />
         </div>
       </div>
-      <div className="space-y-3 pt-4 border-t border-slate-100">
-        <SkeletonTextLine height="h-5" width="w-44" className="bg-slate-300/80 rounded" />
+      <div className="space-y-3 pt-4 border-none">
+        <SkeletonTextLine height="h-5" width="w-44" className="rounded" />
         <SkeletonParagraph lines={4} align="right" />
       </div>
     </div>
