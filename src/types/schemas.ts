@@ -102,6 +102,27 @@ export const EconomyPillarSchema = z.object({
 });
 export type EconomyPillar = z.infer<typeof EconomyPillarSchema>;
 
+export const LandmarkDetailSchema = z.object({
+  id: z.string().min(1),
+  name: z.string().min(1),
+  category: z.string().optional(),
+  description: z.string().min(1),
+  image: z.string().optional(),
+  bgGradient: z.string().optional(),
+});
+export type LandmarkDetail = z.infer<typeof LandmarkDetailSchema>;
+
+export const PioneerDetailSchema = z.object({
+  id: z.string().min(1),
+  name: z.string().min(1),
+  role: z.string().min(1),
+  era: z.string().optional(),
+  description: z.string().min(1),
+  image: z.string().optional(),
+  bgGradient: z.string().optional(),
+});
+export type PioneerDetail = z.infer<typeof PioneerDetailSchema>;
+
 /**
  * 6. District Item Schema
  */
@@ -130,6 +151,8 @@ export const DistrictItemSchema = z.object({
   naturalResources: z.array(z.string()).optional(),
   traditionsAndCulture: z.string().optional(),
   folkHeritage: z.array(z.string()).optional(),
+  landmarksList: z.array(LandmarkDetailSchema).optional(),
+  pioneersList: z.array(PioneerDetailSchema).optional(),
 });
 export type DistrictItem = z.infer<typeof DistrictItemSchema>;
 

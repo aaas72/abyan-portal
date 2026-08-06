@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Navbar, Footer, SmartContainer } from "@/components/layout";
 import { SubpageHero, CategoryTabSelector, TagList } from "@/components/ui";
+import UniversalCard from "@/components/cards/UniversalCard";
 import PortalService from "@/services/portalService";
 import {
   curtainOverlayVariants,
@@ -454,92 +455,151 @@ export function DistrictsPageContent() {
                       {/* TAB 3: PIONEERS & FIGURES */}
                       {activeSubTab === "pioneers" && (
                         <div className="space-y-4">
-                          {activeDistrict.famousPioneers && activeDistrict.famousPioneers.length > 0 && (
-                            <TagList
-                              title="أبرز الأعلام والشخصيات بالمديرية:"
-                              items={activeDistrict.famousPioneers}
-                              variant="pure-text"
-                              color="emerald"
-                            />
-                          )}
-                          {activeDistrict.pioneersDetails && activeDistrict.pioneersDetails.length > 0 && (
-                            <div className="pt-2">
-                              <TagList
-                                title="تفاصيل ومساهمات الرواد الوطنية والتاريخية:"
-                                items={activeDistrict.pioneersDetails}
-                                variant="pure-text"
-                                color="sky"
-                              />
-                            </div>
-                          )}
+                          <h4 className="text-xs sm:text-sm font-normal text-[#10b981] font-abyan-title block border-none">
+                            أعلام وشخصيات المديرية الوطنية والتاريخية:
+                          </h4>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {activeDistrict.pioneersDetails && activeDistrict.pioneersDetails.length > 0 ? (
+                              activeDistrict.pioneersDetails.map((detail, idx) => {
+                                const parts = detail.split(" - ");
+                                const name = parts[0] || detail;
+                                const bio = parts[1] || `رمز تاريخي ومساهم بارز في مسيرة مديرية ${activeDistrict.name}.`;
+                                return (
+                                  <UniversalCard
+                                    key={idx}
+                                    variant="pioneer"
+                                    data={{
+                                      title: name,
+                                      category: `رمز تاريخي • ${activeDistrict.name}`,
+                                      description: bio,
+                                      location: activeDistrict.name,
+                                      era: "رواد أبين",
+                                      bgGradient: idx % 2 === 0
+                                        ? "from-emerald-950 via-slate-800 to-slate-900"
+                                        : "from-sky-950 via-slate-800 to-slate-900"
+                                    }}
+                                  />
+                                );
+                              })
+                            ) : (
+                              activeDistrict.famousPioneers?.map((pioneer, idx) => (
+                                <UniversalCard
+                                  key={idx}
+                                  variant="pioneer"
+                                  data={{
+                                    title: pioneer,
+                                    category: `علم بالمديرية • ${activeDistrict.name}`,
+                                    description: `أحد أعمدة وشخصيات مديرية ${activeDistrict.name} البارزة في التاريخ والتراث الأبيني.`,
+                                    location: activeDistrict.name,
+                                    era: "رواد أبين",
+                                    bgGradient: "from-emerald-950 via-slate-800 to-slate-900"
+                                  }}
+                                />
+                              ))
+                            )}
+                          </div>
                         </div>
                       )}
 
                       {/* TAB 4: SITES & LANDMARKS */}
                       {activeSubTab === "sites" && (
                         <div className="space-y-4">
-                          <TagList
-                            title="أهم المعالم والحصون الأثرية:"
-                            items={activeDistrict.landmarks}
-                            variant="pure-text"
-                            color="emerald"
-                          />
-                          {activeDistrict.historicalSites && activeDistrict.historicalSites.length > 0 && (
-                            <div className="pt-2">
-                              <TagList
-                                title="الشواهد والقلاع الأثرية بالمديرية:"
-                                items={activeDistrict.historicalSites}
-                                variant="pure-text"
-                                color="sky"
-                              />
-                            </div>
-                          )}
+                          <h4 className="text-xs sm:text-sm font-normal text-[#10b981] font-abyan-title block border-none">
+                            الشواهد والمعالم والحصون الأثرية بالمديرية:
+                          </h4>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {activeDistrict.historicalSites && activeDistrict.historicalSites.length > 0 ? (
+                              activeDistrict.historicalSites.map((site, idx) => (
+                                <UniversalCard
+                                  key={idx}
+                                  variant="food"
+                                  data={{
+                                    title: site,
+                                    category: `معلم أثري • ${activeDistrict.name}`,
+                                    description: `صرح أثري تاريخي معبر يعكس أصالة المعمار والمنعة التاريخية في مديرية ${activeDistrict.name}.`,
+                                    location: activeDistrict.name,
+                                    bgGradient: idx % 2 === 0
+                                      ? "from-emerald-950 via-sky-900 to-slate-900"
+                                      : "from-sky-950 via-emerald-900 to-slate-900"
+                                  }}
+                                />
+                              ))
+                            ) : (
+                              activeDistrict.landmarks.map((landmark, idx) => (
+                                <UniversalCard
+                                  key={idx}
+                                  variant="food"
+                                  data={{
+                                    title: landmark,
+                                    category: `معلم بارز • ${activeDistrict.name}`,
+                                    description: `أحد أهم معالم الطبيعة والتراث الجغرافي البارز في مديرية ${activeDistrict.name}.`,
+                                    location: activeDistrict.name,
+                                    bgGradient: "from-emerald-950 via-sky-900 to-slate-900"
+                                  }}
+                                />
+                              ))
+                            )}
+                          </div>
                         </div>
                       )}
 
                       {/* TAB 5: ECONOMY & CROPS */}
                       {activeSubTab === "economy" && (
-                        <div className="space-y-4">
+                        <div className="space-y-5">
                           {activeDistrict.economyDetails && (
                             <p className="text-xs sm:text-sm text-slate-700 font-abyan-body font-normal leading-relaxed">
                               {activeDistrict.economyDetails}
                             </p>
                           )}
-                          <TagList
-                            title="أبرز المحاصيل والثروات الزراعية والحيوانية:"
-                            items={activeDistrict.crops}
-                            variant="pure-text"
-                            color="sky"
-                          />
-                          {activeDistrict.naturalResources && activeDistrict.naturalResources.length > 0 && (
-                            <div className="pt-2">
-                              <TagList
-                                title="الموارد والثروات الطبيعية بالمديرية:"
-                                items={activeDistrict.naturalResources}
-                                variant="pure-text"
-                                color="emerald"
+                          <h4 className="text-xs sm:text-sm font-normal text-[#10b981] font-abyan-title block border-none">
+                            أبرز المحاصيل والمنتجات الزراعية والحيوانية:
+                          </h4>
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            {activeDistrict.crops.map((crop, idx) => (
+                              <UniversalCard
+                                key={idx}
+                                variant="food"
+                                data={{
+                                  title: crop,
+                                  category: `خيرات الأرض • ${activeDistrict.name}`,
+                                  description: `محصول وإنتاج فاخر تشتهر به أرض وأودية مديرية ${activeDistrict.name}.`,
+                                  location: activeDistrict.name,
+                                  bgGradient: "from-emerald-950 via-slate-800 to-sky-900"
+                                }}
                               />
-                            </div>
-                          )}
+                            ))}
+                          </div>
                         </div>
                       )}
 
                       {/* TAB 6: CULTURE & TRADITIONS */}
                       {activeSubTab === "culture" && (
-                        <div className="space-y-4">
+                        <div className="space-y-5">
                           {activeDistrict.traditionsAndCulture && (
                             <p className="text-xs sm:text-sm text-slate-700 font-abyan-body font-normal leading-relaxed">
                               {activeDistrict.traditionsAndCulture}
                             </p>
                           )}
                           {activeDistrict.folkHeritage && activeDistrict.folkHeritage.length > 0 && (
-                            <div className="pt-2">
-                              <TagList
-                                title="الفنون الشعبية وأصالة الموروث بالمديرية:"
-                                items={activeDistrict.folkHeritage}
-                                variant="pure-text"
-                                color="emerald"
-                              />
+                            <div className="space-y-3">
+                              <h4 className="text-xs sm:text-sm font-normal text-[#10b981] font-abyan-title block border-none">
+                                الفنون الشعبية وأصالة الموروث الأبيني:
+                              </h4>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                {activeDistrict.folkHeritage.map((item, idx) => (
+                                  <UniversalCard
+                                    key={idx}
+                                    variant="food"
+                                    data={{
+                                      title: item,
+                                      category: `موروث وفلكلور • ${activeDistrict.name}`,
+                                      description: `لون فلكلوري وفن شعب أصيل يتوارثه أهالي مديرية ${activeDistrict.name} في الأعياد والمناسبات.`,
+                                      location: activeDistrict.name,
+                                      bgGradient: "from-sky-950 via-emerald-950 to-slate-900"
+                                    }}
+                                  />
+                                ))}
+                              </div>
                             </div>
                           )}
                         </div>

@@ -17,6 +17,7 @@ export interface UniversalCardData {
   quote?: string;
   bgGradient?: string;
   aspectRatio?: string;
+  image?: string;
 }
 
 interface UniversalCardProps {
@@ -45,12 +46,21 @@ export default function UniversalCard({
             data.bgGradient || "from-emerald-900 via-sky-900 to-slate-900"
           } p-4 flex flex-col justify-between text-white shadow-inner`}
         >
-          <span className="text-[10px] text-emerald-300 font-abyan-title font-normal block truncate">
-            {data.category}
-          </span>
-          <span className="text-[10px] text-sky-200 font-abyan-title font-normal block leading-tight truncate">
-            {data.location}
-          </span>
+          {data.image ? (
+            <img
+              src={data.image}
+              alt={data.title}
+              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+          ) : null}
+          <div className="relative z-10 flex flex-col justify-between h-full">
+            <span className="text-[10px] text-emerald-300 font-abyan-title font-normal block truncate">
+              {data.category}
+            </span>
+            <span className="text-[10px] text-sky-200 font-abyan-title font-normal block leading-tight truncate">
+              {data.location}
+            </span>
+          </div>
         </div>
 
         {/* Title & Short Description Below Photo Box */}
@@ -82,16 +92,25 @@ export default function UniversalCard({
               data.bgGradient || "from-emerald-900 via-slate-800 to-slate-900"
             } p-3 sm:p-4 flex flex-col justify-between text-white shadow-inner`}
           >
-            {data.era && (
-              <span className="text-xs text-emerald-300 font-abyan-title font-normal block truncate">
-                {data.era}
-              </span>
-            )}
-            {data.location && (
-              <span className="text-xs text-sky-200 font-abyan-title font-normal block leading-tight truncate">
-                {data.location}
-              </span>
-            )}
+            {data.image ? (
+              <img
+                src={data.image}
+                alt={data.title}
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+            ) : null}
+            <div className="relative z-10 flex flex-col justify-between h-full">
+              {data.era && (
+                <span className="text-xs text-emerald-300 font-abyan-title font-normal block truncate">
+                  {data.era}
+                </span>
+              )}
+              {data.location && (
+                <span className="text-xs text-sky-200 font-abyan-title font-normal block leading-tight truncate">
+                  {data.location}
+                </span>
+              )}
+            </div>
           </div>
 
           {/* Title & Role Info Side Container */}
