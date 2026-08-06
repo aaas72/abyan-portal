@@ -1,0 +1,4 @@
+:HL["/abyan-portal/_next/static/chunks/0d--mha7mcbcg.css","style"]
+:HL["/abyan-portal/_next/static/media/thmanyah_serif_display_black-s.p.0rts6pzl7ugjo.otf","font",{"crossOrigin":"","type":"font/otf"}]
+:HL["/abyan-portal/_next/static/media/thmanyah_serif_display_regular-s.p.2m_wh4ftpalpk.otf","font",{"crossOrigin":"","type":"font/otf"}]
+0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"about","param":null,"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}},"staleTime":300,"buildId":"8-SAOuKlkgTxwpJREp_Ks"}
