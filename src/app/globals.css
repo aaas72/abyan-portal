@@ -124,11 +124,13 @@ p.font-abyan-body {
 }
 
 .custom-thin-scrollbar::-webkit-scrollbar {
-  width: 3.5px;
+  width: 4px;
 }
 
 .custom-thin-scrollbar::-webkit-scrollbar-track {
   background: transparent;
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
 .custom-thin-scrollbar::-webkit-scrollbar-thumb {

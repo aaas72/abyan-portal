@@ -41,8 +41,9 @@ export default function UnifiedMediaViewer({ item, onClose }: UnifiedMediaViewer
           exit={curtainOverlayVariants.exit}
           transition={curtainOverlayTransition}
           onClick={(e) => e.stopPropagation()}
-          className="bg-white rounded-3xl max-w-2xl w-full p-5 sm:p-8 text-right space-y-5 max-h-[85dvh] sm:max-h-[90vh] overflow-y-auto custom-thin-scrollbar shadow-2xl relative cursor-default"
+          className="bg-white rounded-3xl max-w-2xl w-full max-h-[85dvh] sm:max-h-[90vh] overflow-hidden shadow-2xl relative cursor-default flex flex-col"
         >
+          <div className="w-full h-full p-5 sm:p-8 text-right space-y-5 overflow-y-auto custom-thin-scrollbar">
 
           {/* Media Header Row: Square Image Box Right + Text Details In Front */}
           <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-5 pt-2 border-b border-slate-100 pb-5 sm:pb-6 w-full">
@@ -125,7 +126,8 @@ export default function UnifiedMediaViewer({ item, onClose }: UnifiedMediaViewer
               </button>
             </div>
           </div>
-        </motion.div>
+        </div>
+      </motion.div>
       </motion.div>
     </AnimatePresence>
   );
