@@ -32,10 +32,12 @@ export default function PioneersPage() {
     setSelectedPioneerModal({
       id: fig.id,
       title: fig.name,
+      subtitle: fig.role,
+      fullBiography: `${fig.biography}${fig.quote ? `\n\nالمقولة والشاهد التراثي: « ${fig.quote} »` : ""}`,
       year: fig.era,
       location: fig.location,
       categoryLabel: currentCategory.categoryName,
-      description: `${fig.role} - ${fig.biography} ${fig.quote ? `\n\nالمقولة الأثرية: « ${fig.quote} »` : ""}`,
+      description: fig.role,
       bgGradient: fig.bgGradient,
     });
   };
