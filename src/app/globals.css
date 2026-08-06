@@ -43,12 +43,13 @@ body {
   overflow-x: hidden;
 }
 
-/* قاعدة عالمية صارمة لتطبيق خط ثمانية ريجلار الفاخر على جميع الفقرات وتاجات p في المنصة دون استثناء */
+/* قاعدة عالمية صارمة لتطبيق خط ثمانية ريجلار ولون الرمادي الصخري النقي (#1e293b) على جميع الفقرات وتاجات p في المنصة دون استثناء لضمان أقصى تباين وقرائية */
 p,
 p *,
 p.font-abyan-title,
 p.font-abyan-body {
   font-family: 'ThmanyahSerifRegular', var(--font-abyan-body), serif !important;
+  color: #1e293b !important;
   line-height: 1.6;
   overflow: visible;
   font-weight: 400;
@@ -56,6 +57,7 @@ p.font-abyan-body {
 
 .font-abyan-body {
   font-family: 'ThmanyahSerifRegular', var(--font-abyan-body), serif !important;
+  color: #1e293b !important;
   line-height: 1.6;
   overflow: visible;
   font-weight: 400;

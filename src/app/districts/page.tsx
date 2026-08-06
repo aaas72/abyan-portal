@@ -528,7 +528,7 @@ export function DistrictsPageContent() {
                       {activeSubTab === "culture" && (
                         <div className="space-y-4">
                           {activeDistrict.traditionsAndCulture && (
-                            <p className="text-xs sm:text-sm text-sky-600 font-abyan-body font-normal leading-relaxed">
+                            <p className="text-xs sm:text-sm text-slate-700 font-abyan-body font-normal leading-relaxed">
                               {activeDistrict.traditionsAndCulture}
                             </p>
                           )}

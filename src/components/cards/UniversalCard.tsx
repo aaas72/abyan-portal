@@ -116,7 +116,7 @@ export default function UniversalCard({
 
         {/* Quote if provided */}
         {data.quote && (
-          <p className="text-xs text-sky-600 font-abyan-body font-normal leading-relaxed pt-1 line-clamp-2 overflow-hidden break-words w-full">
+          <p className="text-xs text-slate-700 font-abyan-body font-normal leading-relaxed pt-1 line-clamp-2 overflow-hidden break-words w-full">
             « {data.quote} »
           </p>
         )}
