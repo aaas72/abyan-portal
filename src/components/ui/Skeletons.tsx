@@ -84,7 +84,7 @@ export function PioneerCardSkeleton() {
       {/* Subtitle */}
       <SkeletonBase className="h-3.5 w-1/3 mr-0 rounded-md bg-sky-100/60" />
 
-      {/* Description lines (line-clamp-3 leading-relaxed) */}
+      {/* Description lines */}
       <div className="space-y-2 pt-1">
         <SkeletonBase className="h-3 sm:h-3.5 w-full rounded-sm" />
         <SkeletonBase className="h-3 sm:h-3.5 w-11/12 rounded-sm" />
@@ -266,7 +266,7 @@ export function MediaViewerModalSkeleton() {
 }
 
 /**
- * 8. Complete 1-to-1 Page Skeleton Template
+ * 8. Pure Body Content Skeleton (Navbar & Footer are ALWAYS Real & Persistent!)
  */
 export function PageSkeleton({
   gridType = "cards",
@@ -276,40 +276,37 @@ export function PageSkeleton({
   count?: number;
 }) {
   return (
-    <div className="min-h-screen bg-white text-slate-900 font-cairo selection:bg-emerald-500 selection:text-white">
-      {/* Top Navbar Header Safe Distance Area */}
-      <main className="pt-44 sm:pt-48 lg:pt-52 pb-16">
-        {/* 1. SubpageHero Skeleton */}
-        <SubpageHeroSkeleton />
+    <div className="w-full">
+      {/* 1. SubpageHero Skeleton */}
+      <SubpageHeroSkeleton />
 
-        {/* 2. CategoryTabSelector Skeleton */}
-        <CategoryTabSelectorSkeleton count={5} />
+      {/* 2. CategoryTabSelector Skeleton */}
+      <CategoryTabSelectorSkeleton count={5} />
 
-        {/* 3. Main Grid Container */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          {gridType === "districts" ? (
-            <DistrictDetailSkeleton />
-          ) : gridType === "pioneers" ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              {Array.from({ length: count }).map((_, idx) => (
-                <PioneerCardSkeleton key={idx} />
-              ))}
-            </div>
-          ) : gridType === "food" ? (
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 max-w-4xl mx-auto">
-              {Array.from({ length: count }).map((_, idx) => (
-                <FoodCardSkeleton key={idx} />
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-5xl mx-auto">
-              {Array.from({ length: count }).map((_, idx) => (
-                <ImageShowcaseCardSkeleton key={idx} />
-              ))}
-            </div>
-          )}
-        </div>
-      </main>
+      {/* 3. Main Grid Container */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {gridType === "districts" ? (
+          <DistrictDetailSkeleton />
+        ) : gridType === "pioneers" ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {Array.from({ length: count }).map((_, idx) => (
+              <PioneerCardSkeleton key={idx} />
+            ))}
+          </div>
+        ) : gridType === "food" ? (
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 max-w-4xl mx-auto">
+            {Array.from({ length: count }).map((_, idx) => (
+              <FoodCardSkeleton key={idx} />
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {Array.from({ length: count }).map((_, idx) => (
+              <ImageShowcaseCardSkeleton key={idx} />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
