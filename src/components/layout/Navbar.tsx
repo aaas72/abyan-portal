@@ -68,7 +68,9 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
           {/* Left Side (Desktop & Tablet): Horizontal Navigation Links */}
           <nav className="hidden md:flex items-center gap-3 sm:gap-4 lg:gap-6 pt-2">
             {navSections.map((sec) => {
-              const isActive = pathname === sec.href;
+              const currentPath = (pathname || "").replace(/\/$/, "");
+              const targetPath = (sec.href || "").replace(/\/$/, "");
+              const isActive = currentPath === targetPath || (targetPath !== "" && currentPath.startsWith(targetPath));
 
               return (
                 <Link key={sec.id} href={sec.href} className="no-underline">
@@ -78,7 +80,7 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
                     transition={{ duration: 0.2, ease: "easeOut" }}
                     className={`font-abyan-title text-xs sm:text-sm lg:text-base transition-colors cursor-pointer drop-shadow-sm font-normal block ${
                       isActive
-                        ? "text-[#10b981] font-medium"
+                        ? "text-[#10b981] font-normal opacity-100"
                         : isHomePage
                         ? "text-white/90 hover:text-white"
                         : "text-slate-800 hover:text-sky-600"
@@ -148,7 +150,9 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
                 {/* Vertical Links List */}
                 <nav className="flex flex-col space-y-5">
                   {navSections.map((sec) => {
-                    const isActive = pathname === sec.href;
+                    const currentPath = (pathname || "").replace(/\/$/, "");
+                    const targetPath = (sec.href || "").replace(/\/$/, "");
+                    const isActive = currentPath === targetPath || (targetPath !== "" && currentPath.startsWith(targetPath));
 
                     return (
                       <Link
@@ -160,7 +164,7 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
                         <span
                           className={`font-abyan-title text-lg font-normal transition-colors block ${
                             isActive
-                              ? "text-sky-200 font-medium"
+                              ? "text-amber-200 font-medium"
                               : "text-white/90 hover:text-white"
                           }`}
                         >
