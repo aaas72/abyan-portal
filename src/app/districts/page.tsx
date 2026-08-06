@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Navbar, Footer, SmartContainer } from "@/components/layout";
 import { SubpageHero, CategoryTabSelector, TagList } from "@/components/ui";
+import UnifiedMediaViewer, { MediaItem } from "@/components/ui/UnifiedMediaViewer";
 import UniversalCard from "@/components/cards/UniversalCard";
 import PortalService from "@/services/portalService";
 import {
@@ -25,6 +26,7 @@ export function DistrictsPageContent() {
   );
   const [selectedRegionFilter, setSelectedRegionFilter] = useState<string>("all");
   const [activeSubTab, setActiveSubTab] = useState<DistrictSubTab>("history");
+  const [selectedMediaItem, setSelectedMediaItem] = useState<MediaItem | null>(null);
 
   useEffect(() => {
     if (queryDistrictId) {
@@ -468,6 +470,19 @@ export function DistrictsPageContent() {
                                   <UniversalCard
                                     key={idx}
                                     variant="pioneer"
+                                    onClick={() =>
+                                      setSelectedMediaItem({
+                                        id: `pioneer-${idx}`,
+                                        title: name,
+                                        categoryLabel: `رمز تاريخي • مديرية ${activeDistrict.name}`,
+                                        location: activeDistrict.name,
+                                        description: bio,
+                                        year: "رواد أبين",
+                                        bgGradient: idx % 2 === 0
+                                          ? "from-emerald-950 via-slate-800 to-slate-900"
+                                          : "from-sky-950 via-slate-800 to-slate-900",
+                                      })
+                                    }
                                     data={{
                                       title: name,
                                       category: `رمز تاريخي • ${activeDistrict.name}`,
@@ -486,6 +501,17 @@ export function DistrictsPageContent() {
                                 <UniversalCard
                                   key={idx}
                                   variant="pioneer"
+                                  onClick={() =>
+                                    setSelectedMediaItem({
+                                      id: `famous-${idx}`,
+                                      title: pioneer,
+                                      categoryLabel: `علم بالمديرية • ${activeDistrict.name}`,
+                                      location: activeDistrict.name,
+                                      description: `أحد أعمدة وشخصيات مديرية ${activeDistrict.name} البارزة في التاريخ والتراث الأبيني.`,
+                                      year: "رواد أبين",
+                                      bgGradient: "from-emerald-950 via-slate-800 to-slate-900",
+                                    })
+                                  }
                                   data={{
                                     title: pioneer,
                                     category: `علم بالمديرية • ${activeDistrict.name}`,
@@ -513,6 +539,18 @@ export function DistrictsPageContent() {
                                 <UniversalCard
                                   key={idx}
                                   variant="food"
+                                  onClick={() =>
+                                    setSelectedMediaItem({
+                                      id: `site-${idx}`,
+                                      title: site,
+                                      categoryLabel: `معلم أثري • مديرية ${activeDistrict.name}`,
+                                      location: activeDistrict.name,
+                                      description: `صرح أثري تاريخي معبر يعكس أصالة المعمار والمنعة التاريخية في مديرية ${activeDistrict.name}.`,
+                                      bgGradient: idx % 2 === 0
+                                        ? "from-emerald-950 via-sky-900 to-slate-900"
+                                        : "from-sky-950 via-emerald-900 to-slate-900",
+                                    })
+                                  }
                                   data={{
                                     title: site,
                                     category: `معلم أثري • ${activeDistrict.name}`,
@@ -529,6 +567,16 @@ export function DistrictsPageContent() {
                                 <UniversalCard
                                   key={idx}
                                   variant="food"
+                                  onClick={() =>
+                                    setSelectedMediaItem({
+                                      id: `landmark-${idx}`,
+                                      title: landmark,
+                                      categoryLabel: `معلم بارز • مديرية ${activeDistrict.name}`,
+                                      location: activeDistrict.name,
+                                      description: `أحد أهم معالم الطبيعة والتراث الجغرافي البارز في مديرية ${activeDistrict.name}.`,
+                                      bgGradient: "from-emerald-950 via-sky-900 to-slate-900",
+                                    })
+                                  }
                                   data={{
                                     title: landmark,
                                     category: `معلم بارز • ${activeDistrict.name}`,
@@ -559,6 +607,16 @@ export function DistrictsPageContent() {
                               <UniversalCard
                                 key={idx}
                                 variant="food"
+                                onClick={() =>
+                                  setSelectedMediaItem({
+                                    id: `crop-${idx}`,
+                                    title: crop,
+                                    categoryLabel: `خيرات الأرض • مديرية ${activeDistrict.name}`,
+                                    location: activeDistrict.name,
+                                    description: `محصول وإنتاج فاخر تشتهر به أرض وأودية مديرية ${activeDistrict.name}.`,
+                                    bgGradient: "from-emerald-950 via-slate-800 to-sky-900",
+                                  })
+                                }
                                 data={{
                                   title: crop,
                                   category: `خيرات الأرض • ${activeDistrict.name}`,
@@ -590,6 +648,16 @@ export function DistrictsPageContent() {
                                   <UniversalCard
                                     key={idx}
                                     variant="food"
+                                    onClick={() =>
+                                      setSelectedMediaItem({
+                                        id: `heritage-${idx}`,
+                                        title: item,
+                                        categoryLabel: `موروث وفلكلور • مديرية ${activeDistrict.name}`,
+                                        location: activeDistrict.name,
+                                        description: `لون فلكلوري وفن شعب أصيل يتوارثه أهالي مديرية ${activeDistrict.name} في الأعياد والمناسبات.`,
+                                        bgGradient: "from-sky-950 via-emerald-950 to-slate-900",
+                                      })
+                                    }
                                     data={{
                                       title: item,
                                       category: `موروث وفلكلور • ${activeDistrict.name}`,
@@ -624,6 +692,9 @@ export function DistrictsPageContent() {
           </div>
         </SmartContainer>
       </main>
+
+      {/* Unified Media Viewer Modal Preview */}
+      <UnifiedMediaViewer item={selectedMediaItem} onClose={() => setSelectedMediaItem(null)} />
 
       {/* Footer */}
       <Footer />

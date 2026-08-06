@@ -211,6 +211,7 @@ export const MediaItemSchema = z.object({
   location: z.string().optional(),
   description: z.string().optional(),
   bgGradient: z.string().optional(),
+  image: z.string().optional(),
 });
 export type MediaItem = z.infer<typeof MediaItemSchema>;
 

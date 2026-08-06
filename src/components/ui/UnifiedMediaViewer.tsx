@@ -40,8 +40,15 @@ export default function UnifiedMediaViewer({ item, onClose }: UnifiedMediaViewer
                 item.bgGradient || "from-slate-800 via-slate-700 to-slate-900"
               } p-3 sm:p-4 flex flex-col justify-between text-white shadow-md`}
             >
-              {/* Background Pattern */}
-              <div className="absolute inset-0 opacity-25 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
+              {item.image ? (
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              ) : (
+                <div className="absolute inset-0 opacity-25 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
+              )}
 
               {item.year ? (
                 <span className="text-xs text-emerald-300 font-abyan-title font-normal block z-10 truncate">
