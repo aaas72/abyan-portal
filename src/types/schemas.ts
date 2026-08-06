@@ -123,6 +123,17 @@ export const PioneerDetailSchema = z.object({
 });
 export type PioneerDetail = z.infer<typeof PioneerDetailSchema>;
 
+export const DistrictCardItemSchema = z.object({
+  id: z.string().min(1),
+  title: z.string().min(1),
+  subtitle: z.string().optional(),
+  description: z.string().min(1),
+  fullBiography: z.string().optional(),
+  image: z.string().optional(),
+  bgGradient: z.string().optional(),
+});
+export type DistrictCardItem = z.infer<typeof DistrictCardItemSchema>;
+
 /**
  * 6. District Item Schema
  */
@@ -153,6 +164,10 @@ export const DistrictItemSchema = z.object({
   folkHeritage: z.array(z.string()).optional(),
   landmarksList: z.array(LandmarkDetailSchema).optional(),
   pioneersList: z.array(PioneerDetailSchema).optional(),
+  pioneersCardList: z.array(DistrictCardItemSchema).optional(),
+  sitesCardList: z.array(DistrictCardItemSchema).optional(),
+  cropsCardList: z.array(DistrictCardItemSchema).optional(),
+  heritageCardList: z.array(DistrictCardItemSchema).optional(),
 });
 export type DistrictItem = z.infer<typeof DistrictItemSchema>;
 
