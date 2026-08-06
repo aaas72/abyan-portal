@@ -55,9 +55,19 @@ export default function GalleryPage() {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                  onClick={() => setActiveItemModal(item)}
-                  className="break-inside-avoid inline-block w-full group cursor-pointer text-right bg-transparent border-b border-slate-100 pb-4 mb-2"
+                  onClick={() =>
+                    setActiveItemModal({
+                      id: item.id,
+                      title: item.title,
+                      subtitle: `${item.categoryLabel} • ${item.location}`,
+                      fullBiography: item.description,
+                      year: item.year,
+                      location: item.location,
+                      categoryLabel: item.categoryLabel,
+                      description: item.description,
+                      bgGradient: item.bgGradient,
+                    })
+                  }
                 >
                   {/* Visual Card Banner */}
                   <div

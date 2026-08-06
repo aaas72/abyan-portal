@@ -32,9 +32,11 @@ export default function CulturePage() {
     setSelectedFoodModal({
       id: foodCard.id,
       title: foodCard.title,
+      subtitle: `${foodCard.tag} • ${foodCard.location}`,
+      fullBiography: foodCard.description,
       location: foodCard.location,
       categoryLabel: "ثقافة المائدة والمأكولات الشعبية",
-      description: `${foodCard.tag} - ${foodCard.description}`,
+      description: foodCard.description,
       bgGradient: foodCard.bgGradient,
     });
   };

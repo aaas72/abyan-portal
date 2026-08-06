@@ -31,9 +31,11 @@ export default function EconomyPage() {
     setSelectedEconomyModal({
       id: photoCard.id,
       title: photoCard.title,
+      subtitle: `${photoCard.tag || "ركائز الاقتصاد"} • ${photoCard.location || "أبين"}`,
+      fullBiography: photoCard.description,
       location: photoCard.location,
       categoryLabel: currentPillar.pillarName,
-      description: `${photoCard.tag} - ${photoCard.description}`,
+      description: photoCard.description,
       bgGradient: photoCard.bgGradient,
     });
   };

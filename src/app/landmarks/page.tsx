@@ -32,9 +32,11 @@ export default function LandmarksPage() {
     setSelectedLandmarkModal({
       id: photoCard.id,
       title: photoCard.title,
+      subtitle: photoCard.tag ? `${photoCard.tag} • ${photoCard.location || "أبين"}` : photoCard.location,
+      fullBiography: photoCard.description,
       location: photoCard.location,
       categoryLabel: currentLandmark.categoryName,
-      description: `${photoCard.tag} - ${photoCard.description}`,
+      description: photoCard.description,
       bgGradient: photoCard.bgGradient,
     });
   };
