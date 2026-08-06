@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import EconomyDataWrapper from "./EconomyDataWrapper";
-import { PageSkeleton } from "@/components/ui/Skeletons";
+import { EconomyPageSkeleton } from "@/components/ui/Skeletons";
 import { Navbar, Footer } from "@/components/layout";
 
 export default function EconomyPage() {
@@ -9,9 +9,9 @@ export default function EconomyPage() {
       {/* Real Navbar ALWAYS visible & persistent */}
       <Navbar activeSection="economy" />
 
-      {/* Main Content Area wrapped in Suspense */}
+      {/* Main Content Area wrapped in Suspense with dedicated EconomyPageSkeleton */}
       <main className="pt-44 sm:pt-48 lg:pt-52 pb-16">
-        <Suspense fallback={<PageSkeleton gridType="cards" count={3} />}>
+        <Suspense fallback={<EconomyPageSkeleton />}>
           <EconomyDataWrapper />
         </Suspense>
       </main>

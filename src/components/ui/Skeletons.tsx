@@ -71,7 +71,7 @@ export function SkeletonParagraph({
 }
 
 /**
- * 1. SubpageHero Skeleton (1-to-1 Blueprint Copy, Single-Layer Elements Only, Borderless, Shadowless)
+ * 1. SubpageHero Skeleton (1-to-1 Blueprint Copy, Single-Layer Elements Only)
  */
 export function SubpageHeroSkeleton() {
   return (
@@ -121,7 +121,7 @@ export function CategoryTabSelectorSkeleton({ count = 5 }: { count?: number }) {
 }
 
 /**
- * 3. UniversalCard Pioneer Variant Skeleton (Borderless, Shadowless)
+ * 3. Pioneer Card Skeleton (UniversalCard Pioneer Variant Match)
  */
 export function PioneerCardSkeleton() {
   return (
@@ -148,7 +148,7 @@ export function PioneerCardSkeleton() {
 }
 
 /**
- * 4. ImageShowcaseCard Skeleton (Borderless, Shadowless, Single Aspect-Video Box)
+ * 4. ImageShowcaseCard Skeleton (ImageShowcaseCard Match)
  */
 export function ImageShowcaseCardSkeleton() {
   return (
@@ -173,7 +173,7 @@ export function ImageShowcaseCardSkeleton() {
 export const ContentCardSkeleton = ImageShowcaseCardSkeleton;
 
 /**
- * 5. FoodCard Skeleton (Borderless, Shadowless, Single Square Box)
+ * 5. FoodCard Skeleton (FoodCard Match)
  */
 export function FoodCardSkeleton() {
   return (
@@ -196,7 +196,7 @@ export function FoodCardSkeleton() {
 }
 
 /**
- * 6. District Showcase Detail Skeleton (Borderless, Shadowless)
+ * 6. District Detail Skeleton
  */
 export function DistrictDetailSkeleton() {
   return (
@@ -296,8 +296,156 @@ export function MediaViewerModalSkeleton() {
   );
 }
 
+/* =========================================================================
+   🏛️ DEDICATED PAGE SKELETONS (1-to-1 Blueprint Copies for Each Route)
+   ========================================================================= */
+
 /**
- * 8. Pure Body Content Skeleton (Navbar & Footer are ALWAYS Real & Persistent!)
+ * 🏜️ LandmarksPageSkeleton (Dedicated Skeleton for /landmarks)
+ * Hero Header + Category Tabs + 3-Column ImageShowcaseCard Grid
+ */
+export function LandmarksPageSkeleton() {
+  return (
+    <div className="w-full">
+      <SubpageHeroSkeleton />
+      <CategoryTabSelectorSkeleton count={5} />
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 text-right space-y-6">
+        <div className="space-y-2">
+          <SkeletonTextLine height="h-4" width="w-32" />
+          <SkeletonTextLine height="h-8" width="w-2/3" className="rounded-xl" />
+          <SkeletonParagraph lines={3} align="right" />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-2">
+          {Array.from({ length: 6 }).map((_, idx) => (
+            <ImageShowcaseCardSkeleton key={idx} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * 🗺️ DistrictsPageSkeleton (Dedicated Skeleton for /districts)
+ * Hero Header + Region Tabs + 2-Column Split District Profile Layout
+ */
+export function DistrictsPageSkeleton() {
+  return (
+    <div className="w-full">
+      <SubpageHeroSkeleton />
+      <CategoryTabSelectorSkeleton count={4} />
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <DistrictDetailSkeleton />
+      </div>
+    </div>
+  );
+}
+
+/**
+ * 📜 PioneersPageSkeleton (Dedicated Skeleton for /pioneers)
+ * Hero Header + Category Tabs + 2-Column Pioneer Profile Grid
+ */
+export function PioneersPageSkeleton() {
+  return (
+    <div className="w-full">
+      <SubpageHeroSkeleton />
+      <CategoryTabSelectorSkeleton count={5} />
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 space-y-6 text-right">
+        <div className="space-y-2">
+          <SkeletonTextLine height="h-4" width="w-36" />
+          <SkeletonTextLine height="h-8" width="w-1/2" className="rounded-xl" />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {Array.from({ length: 6 }).map((_, idx) => (
+            <PioneerCardSkeleton key={idx} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * 🎨 CulturePageSkeleton (Dedicated Skeleton for /culture)
+ * Hero Header + Category Tabs + Audio Player & Food Grid Skeleton
+ */
+export function CulturePageSkeleton() {
+  return (
+    <div className="w-full">
+      <SubpageHeroSkeleton />
+      <CategoryTabSelectorSkeleton count={5} />
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 text-right space-y-6">
+        <div className="space-y-2">
+          <SkeletonTextLine height="h-4" width="w-40" />
+          <SkeletonTextLine height="h-8" width="w-3/4" className="rounded-xl" />
+          <SkeletonParagraph lines={3} align="right" />
+        </div>
+        {/* Audio Player Skeleton Bar */}
+        <div className="pt-2">
+          <SkeletonBase className="h-16 w-full rounded-2xl" />
+        </div>
+        {/* Food & Heritage Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-2">
+          {Array.from({ length: 6 }).map((_, idx) => (
+            <FoodCardSkeleton key={idx} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * 🌴 EconomyPageSkeleton (Dedicated Skeleton for /economy)
+ * Hero Header + Pillar Tabs + 3-Column Economy Products Grid
+ */
+export function EconomyPageSkeleton() {
+  return (
+    <div className="w-full">
+      <SubpageHeroSkeleton />
+      <CategoryTabSelectorSkeleton count={5} />
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-6 text-right space-y-6">
+        <div className="space-y-2">
+          <SkeletonTextLine height="h-4" width="w-32" />
+          <SkeletonTextLine height="h-8" width="w-2/3" className="rounded-xl" />
+          <SkeletonParagraph lines={3} align="right" />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 pt-2">
+          {Array.from({ length: 6 }).map((_, idx) => (
+            <FoodCardSkeleton key={idx} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * 🖼️ GalleryPageSkeleton (Dedicated Skeleton for /gallery)
+ * Hero Header + Category Tabs + 3-Column Archive Grid
+ */
+export function GalleryPageSkeleton() {
+  return (
+    <div className="w-full">
+      <SubpageHeroSkeleton />
+      <CategoryTabSelectorSkeleton count={6} />
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6 text-right space-y-6">
+        <div className="space-y-2">
+          <SkeletonTextLine height="h-4" width="w-36" />
+          <SkeletonTextLine height="h-8" width="w-1/2" className="rounded-xl" />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {Array.from({ length: 6 }).map((_, idx) => (
+            <ImageShowcaseCardSkeleton key={idx} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Legacy Generic Fallback (Kept for compatibility)
  */
 export function PageSkeleton({
   gridType = "cards",
@@ -306,38 +454,8 @@ export function PageSkeleton({
   gridType?: "cards" | "pioneers" | "districts" | "food";
   count?: number;
 }) {
-  return (
-    <div className="w-full">
-      {/* 1. SubpageHero Skeleton */}
-      <SubpageHeroSkeleton />
-
-      {/* 2. CategoryTabSelector Skeleton */}
-      <CategoryTabSelectorSkeleton count={5} />
-
-      {/* 3. Main Grid Container */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {gridType === "districts" ? (
-          <DistrictDetailSkeleton />
-        ) : gridType === "pioneers" ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            {Array.from({ length: count }).map((_, idx) => (
-              <PioneerCardSkeleton key={idx} />
-            ))}
-          </div>
-        ) : gridType === "food" ? (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 max-w-4xl mx-auto">
-            {Array.from({ length: count }).map((_, idx) => (
-              <FoodCardSkeleton key={idx} />
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {Array.from({ length: count }).map((_, idx) => (
-              <ImageShowcaseCardSkeleton key={idx} />
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
+  if (gridType === "districts") return <DistrictsPageSkeleton />;
+  if (gridType === "pioneers") return <PioneersPageSkeleton />;
+  if (gridType === "food") return <EconomyPageSkeleton />;
+  return <LandmarksPageSkeleton />;
 }

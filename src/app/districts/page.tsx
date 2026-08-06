@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import DistrictsDataWrapper from "./DistrictsDataWrapper";
-import { PageSkeleton } from "@/components/ui/Skeletons";
+import { DistrictsPageSkeleton } from "@/components/ui/Skeletons";
 import { Navbar, Footer } from "@/components/layout";
 
 export default function DistrictsPage() {
@@ -9,9 +9,9 @@ export default function DistrictsPage() {
       {/* Real Navbar ALWAYS visible & persistent */}
       <Navbar activeSection="districts" />
 
-      {/* Main Content Area wrapped in Suspense */}
+      {/* Main Content Area wrapped in Suspense with dedicated DistrictsPageSkeleton */}
       <main className="pt-44 sm:pt-48 lg:pt-52 pb-16">
-        <Suspense fallback={<PageSkeleton gridType="districts" />}>
+        <Suspense fallback={<DistrictsPageSkeleton />}>
           <DistrictsDataWrapper />
         </Suspense>
       </main>

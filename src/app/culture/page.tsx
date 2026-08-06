@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import CultureDataWrapper from "./CultureDataWrapper";
-import { PageSkeleton } from "@/components/ui/Skeletons";
+import { CulturePageSkeleton } from "@/components/ui/Skeletons";
 import { Navbar, Footer } from "@/components/layout";
 
 export default function CulturePage() {
@@ -9,9 +9,9 @@ export default function CulturePage() {
       {/* Real Navbar ALWAYS visible & persistent */}
       <Navbar activeSection="culture" />
 
-      {/* Main Content Area wrapped in Suspense */}
+      {/* Main Content Area wrapped in Suspense with dedicated CulturePageSkeleton */}
       <main className="pt-44 sm:pt-48 lg:pt-52 pb-16">
-        <Suspense fallback={<PageSkeleton gridType="cards" count={3} />}>
+        <Suspense fallback={<CulturePageSkeleton />}>
           <CultureDataWrapper />
         </Suspense>
       </main>

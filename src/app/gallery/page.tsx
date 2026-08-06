@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import GalleryDataWrapper from "./GalleryDataWrapper";
-import { PageSkeleton } from "@/components/ui/Skeletons";
+import { GalleryPageSkeleton } from "@/components/ui/Skeletons";
 import { Navbar, Footer } from "@/components/layout";
 
 export default function GalleryPage() {
@@ -9,9 +9,9 @@ export default function GalleryPage() {
       {/* Real Navbar ALWAYS visible & persistent */}
       <Navbar activeSection="gallery" />
 
-      {/* Main Content Area wrapped in Suspense */}
+      {/* Main Content Area wrapped in Suspense with dedicated GalleryPageSkeleton */}
       <main className="pt-44 sm:pt-48 lg:pt-52 pb-16">
-        <Suspense fallback={<PageSkeleton gridType="cards" count={6} />}>
+        <Suspense fallback={<GalleryPageSkeleton />}>
           <GalleryDataWrapper />
         </Suspense>
       </main>

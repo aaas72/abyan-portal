@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import PioneersDataWrapper from "./PioneersDataWrapper";
-import { PageSkeleton } from "@/components/ui/Skeletons";
+import { PioneersPageSkeleton } from "@/components/ui/Skeletons";
 import { Navbar, Footer } from "@/components/layout";
 
 export default function PioneersPage() {
@@ -9,9 +9,9 @@ export default function PioneersPage() {
       {/* Real Navbar ALWAYS visible & persistent */}
       <Navbar activeSection="pioneers" />
 
-      {/* Main Content Area wrapped in Suspense */}
+      {/* Main Content Area wrapped in Suspense with dedicated PioneersPageSkeleton */}
       <main className="pt-44 sm:pt-48 lg:pt-52 pb-16">
-        <Suspense fallback={<PageSkeleton gridType="pioneers" count={4} />}>
+        <Suspense fallback={<PioneersPageSkeleton />}>
           <PioneersDataWrapper />
         </Suspense>
       </main>
