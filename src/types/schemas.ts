@@ -209,7 +209,9 @@ export const MediaItemSchema = z.object({
   categoryLabel: z.string().optional(),
   year: z.string().optional(),
   location: z.string().optional(),
+  subtitle: z.string().optional(),
   description: z.string().optional(),
+  fullBiography: z.string().optional(),
   bgGradient: z.string().optional(),
   image: z.string().optional(),
 });

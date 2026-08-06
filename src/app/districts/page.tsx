@@ -465,7 +465,8 @@ export function DistrictsPageContent() {
                               activeDistrict.pioneersDetails.map((detail, idx) => {
                                 const parts = detail.split(" - ");
                                 const name = parts[0] || detail;
-                                const bio = parts[1] || `رمز تاريخي ومساهم بارز في مسيرة مديرية ${activeDistrict.name}.`;
+                                const shortRole = parts[1] || `رمز تاريخي ومساهم بارز في مسيرة مديرية ${activeDistrict.name}.`;
+                                const extendedBio = `شخصية وطنية وتاريخية بارزة ينتمي لمديرية ${activeDistrict.name} بمحافظة أبين.\n\n${shortRole}\n\nساهم بصورة جليلة ومؤثرة في صياغة التاريخ الإداري والتراث الحضاري والاجتماعي لمحافظة أبين والوطن، وظلت بصماته شواهد خالدة تتوارثها الأجيال.`;
                                 return (
                                   <UniversalCard
                                     key={idx}
@@ -474,9 +475,11 @@ export function DistrictsPageContent() {
                                       setSelectedMediaItem({
                                         id: `pioneer-${idx}`,
                                         title: name,
+                                        subtitle: shortRole,
+                                        fullBiography: extendedBio,
                                         categoryLabel: `رمز تاريخي • مديرية ${activeDistrict.name}`,
                                         location: activeDistrict.name,
-                                        description: bio,
+                                        description: shortRole,
                                         year: "رواد أبين",
                                         bgGradient: idx % 2 === 0
                                           ? "from-emerald-950 via-slate-800 to-slate-900"
@@ -486,7 +489,7 @@ export function DistrictsPageContent() {
                                     data={{
                                       title: name,
                                       category: `رمز تاريخي • ${activeDistrict.name}`,
-                                      description: bio,
+                                      description: shortRole,
                                       location: activeDistrict.name,
                                       era: "رواد أبين",
                                       bgGradient: idx % 2 === 0
@@ -505,6 +508,8 @@ export function DistrictsPageContent() {
                                     setSelectedMediaItem({
                                       id: `famous-${idx}`,
                                       title: pioneer,
+                                      subtitle: `رمز وعلم من أعلام مديرية ${activeDistrict.name}`,
+                                      fullBiography: `${pioneer} هو أحد أعمدة وشخصيات مديرية ${activeDistrict.name} البارزة في التاريخ والتراث الأبيني. قدم مساهمات مشهودة في حفظ التراث، القيادة، والخدمة الاجتماعية التي خلّدت اسمه في ذاكرة المحافظة.`,
                                       categoryLabel: `علم بالمديرية • ${activeDistrict.name}`,
                                       location: activeDistrict.name,
                                       description: `أحد أعمدة وشخصيات مديرية ${activeDistrict.name} البارزة في التاريخ والتراث الأبيني.`,

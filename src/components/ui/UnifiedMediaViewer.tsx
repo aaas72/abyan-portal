@@ -66,7 +66,7 @@ export default function UnifiedMediaViewer({ item, onClose }: UnifiedMediaViewer
             </div>
 
             {/* Text Details In Front of the Square Image Box */}
-            <div className="flex-1 space-y-2 text-right">
+            <div className="flex-1 space-y-1.5 text-right">
               {item.categoryLabel && (
                 <span className="text-xs font-normal text-[#10b981] font-abyan-title block">
                   التصنيف: {item.categoryLabel}
@@ -77,22 +77,29 @@ export default function UnifiedMediaViewer({ item, onClose }: UnifiedMediaViewer
                 {item.title}
               </h2>
 
+              {/* Short Subtitle directly under Name */}
+              {item.subtitle && (
+                <p className="text-xs sm:text-sm text-slate-600 font-abyan-body font-normal leading-relaxed pt-0.5">
+                  {item.subtitle}
+                </p>
+              )}
+
               {item.year && (
-                <p className="text-xs text-slate-500 font-abyan-title font-normal">
+                <p className="text-[11px] text-slate-400 font-abyan-title font-normal pt-1">
                   سنة التوثيق: {item.year} {item.location ? `• الموقع: ${item.location}` : ""}
                 </p>
               )}
             </div>
           </div>
 
-          {/* Media Details Description */}
+          {/* Media Details Description (Full Extended Biography / Description) */}
           <div className="space-y-4 pt-1">
             <div className="space-y-2">
-              <h4 className="font-abyan-title text-base sm:text-lg text-slate-900 font-normal">
+              <h4 className="font-abyan-title text-base sm:text-lg text-slate-900 font-normal border-none">
                 تفاصيل القيد والتوثيق الحضاري:
               </h4>
-              <p className="text-xs sm:text-sm text-slate-700 font-abyan-title font-normal leading-relaxed whitespace-pre-line">
-                {item.description}
+              <p className="text-xs sm:text-sm text-slate-700 font-abyan-body font-normal leading-relaxed whitespace-pre-line">
+                {item.fullBiography || item.description}
               </p>
             </div>
 
