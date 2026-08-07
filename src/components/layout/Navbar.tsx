@@ -43,7 +43,6 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
     { id: "economy", label: "الاقتصاد", href: "/economy" },
     { id: "pioneers", label: "الأعلام", href: "/pioneers" },
     { id: "gallery", label: "الأرشيف", href: "/gallery" },
-    { id: "about", label: "عن المنصة", href: "/about" },
   ];
 
   return (
@@ -70,7 +69,9 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
             {navSections.map((sec) => {
               const currentPath = (pathname || "").replace(/\/$/, "");
               const targetPath = (sec.href || "").replace(/\/$/, "");
-              const isActive = currentPath === targetPath || (targetPath !== "" && currentPath.startsWith(targetPath));
+              const isActive =
+                currentPath === targetPath ||
+                (targetPath !== "" && currentPath.startsWith(targetPath));
 
               return (
                 <Link key={sec.id} href={sec.href} className="no-underline">
@@ -82,8 +83,8 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
                       isActive
                         ? "text-[#10b981] font-normal opacity-100"
                         : isHomePage
-                        ? "text-white/90 hover:text-white"
-                        : "text-slate-800 hover:text-sky-600"
+                          ? "text-white/90 hover:text-white"
+                          : "text-slate-800 hover:text-sky-600"
                     }`}
                   >
                     {sec.label}
@@ -152,7 +153,9 @@ export default function Navbar({ activeSection, onNavigate }: NavbarProps) {
                   {navSections.map((sec) => {
                     const currentPath = (pathname || "").replace(/\/$/, "");
                     const targetPath = (sec.href || "").replace(/\/$/, "");
-                    const isActive = currentPath === targetPath || (targetPath !== "" && currentPath.startsWith(targetPath));
+                    const isActive =
+                      currentPath === targetPath ||
+                      (targetPath !== "" && currentPath.startsWith(targetPath));
 
                     return (
                       <Link

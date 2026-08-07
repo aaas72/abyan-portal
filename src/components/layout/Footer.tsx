@@ -2,7 +2,8 @@
 
 import React from "react";
 import Link from "next/link";
-import SmartContainer from "./SmartContainer";
+import { motion } from "framer-motion";
+import { sectionFadeUpVariants, itemFadeInRight } from "@/lib/animations";
 
 export default function Footer() {
   const footerLinks = [
@@ -17,43 +18,51 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="w-full py-12 bg-white border-none shadow-none cursor-default">
-      <SmartContainer className="flex flex-col gap-8">
-        
-        {/* Top Footer Row: Title & Subpage Directory Links */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-right pb-8">
-          {/* Right Side: Title */}
-          <div className="space-y-1">
-            <h3 className="font-abyan-title text-2xl text-slate-900 font-normal">
-              بوابة <span className="text-sky-600">أبين</span> الثقافية
+    <footer className="w-full bg-white p-4 sm:p-6 lg:p-8 border-none shadow-none flex flex-col gap-4">
+      {/* اللوحة المُأطَّرة بخلفية خضراء — نفس أسلوب الهيرو */}
+      <motion.div
+        {...sectionFadeUpVariants}
+        className="relative w-full rounded-[24px] sm:rounded-[32px] overflow-hidden bg-[#10b981] px-6 sm:px-10 lg:px-16 py-10 sm:py-14 flex flex-col gap-8"
+      >
+        {/* طبقة تدرج خفيف لإضفاء العمق كما في الهيرو */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#059669]/80 via-[#10b981] to-[#047857]/90 pointer-events-none" />
+
+        {/* المحتوى فوق التدرج */}
+        <div className="relative z-10 flex flex-col gap-8">
+          {/* الشعار والوصف */}
+          <motion.div {...itemFadeInRight(0.1)} className="space-y-1">
+            <h3 className="font-abyan-title text-2xl sm:text-3xl text-white font-normal leading-snug drop-shadow-md">
+              بوابة أَبيَن الثقافية
             </h3>
-            <p className="text-xs text-slate-500 font-abyan-title font-normal">
+            <p className="text-xs sm:text-sm text-white/90 font-abyan-title font-normal leading-relaxed">
               منصة توثيق التراث، الحضارة، والجغرافيا الأبينية العريقة
             </p>
-          </div>
+          </motion.div>
 
-          {/* Left Side: Directory Links */}
-          <div className="flex flex-wrap justify-center md:justify-end gap-x-5 gap-y-2 max-w-xl">
+          {/* الروابط في سطر واحد أفقي */}
+          <motion.div
+            {...itemFadeInRight(0.2)}
+            className="flex flex-row flex-wrap items-center gap-x-6 gap-y-2 border-t border-white/20 pt-6"
+          >
             {footerLinks.map((item, idx) => (
               <Link
                 key={idx}
                 href={item.href}
-                className="text-xs text-slate-700 hover:text-sky-600 font-abyan-title font-normal transition-colors no-underline"
+                className="text-xs sm:text-sm text-white hover:text-sky-200 font-abyan-title font-normal transition-colors no-underline whitespace-nowrap"
               >
                 {item.label}
               </Link>
             ))}
-          </div>
+          </motion.div>
         </div>
+      </motion.div>
 
-        {/* Bottom Footer Row: Copyright */}
-        <div className="text-center md:text-right">
-          <p className="text-xs text-slate-400 font-abyan-title font-normal">
-            جميع الحقوق محفوظة © {new Date().getFullYear()} بوابة أبين الثقافية
-          </p>
-        </div>
-
-      </SmartContainer>
+      {/* حقوق النشر في أقصى أسفل المكون خارج اللوحة الخضراء */}
+      <div className="px-2 sm:px-4 text-center md:text-right">
+        <p className="text-xs text-slate-600 font-abyan-title font-normal">
+          جميع الحقوق محفوظة © {new Date().getFullYear()} بوابة أبين الثقافية
+        </p>
+      </div>
     </footer>
   );
 }

@@ -49,12 +49,13 @@ export default function Hero() {
 
         {/* Bottom Left: Pure Plain Text Date */}
         <div className="absolute bottom-4 sm:bottom-6 lg:bottom-8 left-4 sm:left-6 lg:left-8 z-20">
-          <motion.p
+          <motion.div
             {...itemFadeInRight(0.35)}
-            className="font-abyan-title text-white/90 text-xs sm:text-sm lg:text-base drop-shadow-sm tracking-wide font-normal"
+            className="font-abyan-title text-sky-400 text-xs sm:text-sm lg:text-base drop-shadow-md tracking-wide font-normal"
+            style={{ color: "#38bdf8" }}
           >
             {currentDateString || "الخميس، 6 أغسطس 2026"}
-          </motion.p>
+          </motion.div>
         </div>
 
       </motion.div>
